@@ -1,0 +1,22 @@
+//sample lang to ken 
+
+<?php
+// Database connection parameters
+$host = "localhost";
+$port = 4306;
+$db_name = "";
+$username = "root";
+$password = "";
+
+// Create a new database connection using MySQLi
+$conn = new mysqli($host, $username, $password, $db_name, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
+}
+
+$conn->set_charset("utf8mb4");
+
+?>
+//sample lang to ken 

@@ -1,0 +1,134 @@
+/* ================================
+   Login Splash Screen Stylesheet
+   (CLEANED: Removed Slideshow CSS)
+   ================================ */
+body { 
+	/* Sets default font and removes browser spacing */
+	font-family: Arial, sans-serif;
+	margin: 0; 
+	padding: 0;
+	background-color: transparent;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	min-height: 100vh;
+}
+
+/* ================================
+   MAIN CONTAINER
+   ================================ */
+.container {
+	/* Horizontal layout for image and form sections */
+	display: flex;
+	width: 100vw; 
+	height: 100vh; 
+	max-width: none;
+	box-shadow: none;
+	border-radius: 0;
+	background: white;
+	overflow: hidden;
+	align-items: stretch;
+	position: relative;
+}
+
+/* ================================
+   FORM / WELCOME SECTION (1 RATIO)
+   ================================ */
+.form-section {
+	flex: 1;
+	background-color: #043b68; 
+	color: white;
+	padding: 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	height: 100%;
+	min-width: 0;
+	position: relative;
+}
+
+/* ================================
+   LOGO & TEXT STYLES
+   ================================ */
+.iscp-logo img {
+    width: 120px;
+    height: auto; 
+    display: block; 
+}
+
+.welcome-text {
+	font-size: 2em;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.description-text {
+	font-size: 1.1em;
+	margin-bottom: 30px;
+	opacity: 0.8;
+}
+
+/* ================================
+   BUTTON SECTION
+   ================================ */
+.selection-screen .button-group {
+	width: 80%;
+}
+
+/* Common button styling */
+.action-button {
+	display: block;
+	width: 100%;
+	padding: 15px;
+	margin-bottom: 15px;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 1.1em;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+/* Student button */
+.student-button {
+	background-color: #071ff0;
+	color: white;
+	border: 1px solid #0000CC;
+}
+
+.student-button:hover {
+	background-color: #0c225e;
+}
+
+/* Faculty button */
+.faculty-button {
+	background-color: #ff3131;
+	color: #ffffff;
+	border: 1px solid #CC3333;
+}
+
+.faculty-button:hover {
+	background-color: #660505;
+}
+
+/* ================================
+   TERMS AND CONDITIONS TEXT
+   ================================ */
+.terms-text {
+    font-size: 0.9em;
+    bottom: 20px;
+    left: 40px; 
+    right: 40px;
+    text-align: center;
+    color: white; 
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
+}
+
+.terms-text a {
+    color: white;
+    text-decoration: underline;
+}

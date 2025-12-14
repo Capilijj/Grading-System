@@ -1,0 +1,188 @@
+/* ================================
+   Student Login Screen Stylesheet
+   ================================ */
+
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    padding: 0;
+    background-color: transparent;
+    display: flex; 
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 100vh; 
+}
+
+/* ================================
+   MAIN CONTAINER (Split Screen)
+   ================================ */
+.container {
+    display: flex;              
+    width: 100vw;               
+    height: 100vh;              
+    max-width: none;
+    background: white;
+    overflow: hidden;           
+    align-items: stretch;
+    position: relative;
+}
+
+/* ================================
+   RIGHT SECTION: LOGIN FORM
+   ================================ */
+.form-section {
+    flex: 1;                   
+    background-color: #043b68;  
+    color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
+    align-items: center;       
+    text-align: center;
+    height: 100%;
+    min-width: 0;
+    position: relative;
+}
+
+/* ================================
+   LOGO AND HEADER
+   ================================ */
+.header-content {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 30px;
+}
+
+/* Circular logo container */
+.logo-circle {
+    margin: 0 auto 20px auto;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Logo image styling */
+.logo-circle img {
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%;  
+    object-fit: cover; 
+    border: 3px solid #0b0edb; 
+    display: block;
+}
+
+/* Page title */
+.title-text {
+    font-size: 2em;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* Instruction text below title */
+.instruction-text {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+/* ================================
+   LOGIN FORM STYLING
+   ================================ */
+.login-form {
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Input wrapper */
+.input-group {
+    margin-bottom: 20px;
+}
+
+/* Text and password inputs */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* Placeholder text color */
+.login-form input::placeholder {
+    color: #888;
+}
+
+/* ================================
+   FORGOT PASSWORD LINK
+   ================================ */
+.forgot-links {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+    text-align: right;
+}
+
+.forgot-password-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
+    font-size: 0.92rem;
+}
+
+/* Hover effect for forgot password section */
+.forgot-links:hover { 
+    color: #0515fa; 
+}
+
+/* ================================
+   SIGN IN BUTTON
+   ================================ */
+.sign-in-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 5px; 
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #071ff0; 
+    color: white;
+    border: 1px solid #0000CC;
+}
+
+/* Button hover effect */
+.sign-in-button:hover {
+    background-color: #0c225e;
+}
+
+/* ================================
+   FOOTER LINKS
+   ================================ */
+.Back-links {
+    margin-top: 40px;
+}
+
+/* Back link styling */
+.back-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: color 0.3s;
+}
+
+/* Hover effect for back link */
+.back-link:hover {
+    color: white;
+}

@@ -1,0 +1,75 @@
+/* ================================
+   Terms and Conditions Stylesheet
+   ================================ */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Light background */
+    color: #333;
+    line-height: 1.6;
+}
+.policy-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1, h2 {
+    color: #043b68; /* ISCP Dark Blue Color (from login_splash.css) */
+    padding-bottom: 5px;
+    margin-top: 30px;
+}
+h1 {
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+}
+h2 {
+    border-bottom: 2px solid #043b68;
+}
+p, ul {
+    margin-bottom: 15px;
+}
+ul {
+    padding-left: 25px;
+}
+
+/* ================================
+   TAGALOG TRANSLATION STYLING
+   ================================ */
+.translation-tagalog {
+    display: block; /* Ensures it starts on a new line */
+    margin-top: 5px;
+    font-size: 0.9em; /* Smaller font size */
+    font-style: italic; /* Italic text */
+    color: #666; /* Slightly lighter color */
+    line-height: 1.4;
+}
+/* Ensure list items also break nicely */
+li .translation-tagalog {
+    margin-left: -20px; /* Adjust left margin for better alignment in lists */
+}
+/* ================================
+   LINK STYLING
+   ================================ */
+a {
+    color: #071ff0; /* ISCP Student Blue for links */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.back-link {
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1.1em;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #eee;
+    color: #043b68;
+}
