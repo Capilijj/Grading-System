@@ -1,0 +1,47 @@
+/* footer.css */
+.dashboard-footer {
+    background-color: #000000; /* Solid Black Background */
+    color: #ffffff; /* White Text */
+    padding: 20px 0;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    margin-top: 50px; /* Space from the content above */
+}
+
+.footer-container {
+    max-width: 1100px; /* Matches your dashboard width */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-info-row {
+    display: flex;
+    justify-content: space-between; /* Pushes content to left and right */
+    align-items: center;
+    padding-bottom: 10px;
+    font-size: 0.85rem;
+}
+
+.highlight-text {
+    font-weight: bold;
+}
+
+.footer-copyright {
+    text-align: center;
+    border-top: 1px solid #333; /* Dark subtle line separator */
+    padding-top: 15px;
+    font-size: 0.9rem;
+}
+
+.footer-copyright p {
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .footer-info-row {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}

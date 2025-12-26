@@ -42,7 +42,7 @@
 
             <!-- Login form -->
             <!-- Sends input data to process_student_login.php using POST method -->
-            <form action="process_student_login.php" method="POST" class="login-form">
+            <form action="../User_Dashboard/StudentDashboard.php" method="POST" class="login-form">
 
                 <!-- Student number input -->
                 <div class="input-group">

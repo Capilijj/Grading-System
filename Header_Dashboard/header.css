@@ -1,0 +1,144 @@
+/* header.css */
+:root {
+    --primary-blue: #043b68;
+    --accent-blue: #071ff0;
+    --text-dark: #333;
+    --glass-bg: rgba(255, 255, 255, 0.95);
+}
+
+.main-header {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    padding: 10px 5%; /* Flexible padding para sa wide screen */
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 70px;
+    box-sizing: border-box;
+}
+
+/* Logo and Brand */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-container {
+    height: 45px; 
+    width: 45px;
+    border-radius: 50%;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white; 
+    border: 2px solid var(--primary-blue);
+    flex-shrink: 0;
+}
+
+.nav-logo {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    margin: 0;
+}
+
+/* --- NAVIGATION SA KANAN --- */
+.header-nav {
+    margin-left: auto; /* Ito ang magic line na nagtutulak sa nav pakanan */
+    margin-right: 30px; /* Space bago ang profile icon */
+}
+
+.header-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.header-nav ul li a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    padding: 5px 0;
+}
+
+.header-nav ul li a:hover, 
+.header-nav ul li a.active {
+    color: var(--primary-blue);
+    border-bottom: 2px solid var(--primary-blue);
+}
+
+/* User Profile & Dropdown */
+.header-right {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.profile-trigger {
+    background: #eee;
+    border: 2px solid #ddd;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.profile-trigger:hover {
+    transform: scale(1.05);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 55px;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0px 8px 24px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1001;
+    border: 1px solid #eee;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.dropdown-content a:hover {
+    background-color: #f8f9fa;
+    color: var(--primary-blue);
+}
+
+.logout-btn {
+    color: #d9534f !important;
+    font-weight: bold;
+}
+
+.show {
+    display: block;
+}
