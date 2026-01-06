@@ -1,0 +1,166 @@
+/* grade.css */
+
+/* 1. Base Body Setup */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Kapareho ng background color ng Home Dashboard */
+     background-color: #0c225e; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 2. Container para sa PDF Download logic */
+#grade-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+     background-color: #0c225e;  /* Sinisiguro na pati ang download area ay consistent ang kulay */
+}
+
+.grade-container {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 3. Student Info Banner (White Card gaya sa Home) */
+.student-info-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    overflow: hidden;
+}
+
+.student-name-id {
+    background-color: #f8f9fa;
+    padding: 15px 25px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #043b68;
+    border-bottom: 1px solid #eee;
+}
+
+.academic-details {
+    padding: 20px 25px;
+}
+
+.badge {
+    background-color: #043b68;
+    color: white;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
+}
+
+/* 4. Grades Table Card (White Card) */
+.white-content-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    overflow: hidden;
+}
+
+.grade-header {
+    background: #f8f9fa;
+    padding: 15px 25px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+    color: #333;
+}
+
+/* 5. Button Design (Inilipat mula sa PHP) */
+.btn-download {
+    background-color: #27ae60; /* Green color */
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-download:hover {
+    background-color: #219150;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 6. Table Structure */
+.grade-table-wrapper {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.grade-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.grade-table th {
+    background-color: #ffffff;
+    color: #333;
+    padding: 12px;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-bottom: 2px solid #dee2e6;
+    border-right: 1px solid #eee;
+    text-transform: uppercase;
+}
+
+.grade-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.grade-table tr:hover {
+    background-color: #f9faff;
+}
+
+/* 7. Footer Logic */
+footer, .dashboard-footer {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    margin-top: auto;
+}
+
+/* 8. Media Query para sa Responsive */
+@media (max-width: 768px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .grade-table th, .grade-table td {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+}

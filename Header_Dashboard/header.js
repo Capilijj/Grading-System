@@ -1,20 +1,31 @@
-// header.js
-
 document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
     const profileBtn = document.getElementById('profileBtn');
     const dropdown = document.getElementById('profileDropdown');
 
-    // Kapag kinlik ang profile button
-    profileBtn.addEventListener('click', function(e) {
-        e.stopPropagation(); // Pinipigilan nito ang pag-close agad
-        dropdown.classList.toggle('show');
-    });
+    // Hamburger Toggle
+    if(menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            this.classList.toggle('is-active');
+            navMenu.classList.toggle('active');
+        });
+    }
 
-    // Isara ang dropdown kapag nag-click sa labas
+    // Profile Toggle sa loob ng menu
+    if(profileBtn) {
+        profileBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+    }
+
+    // Close when clicking outside
     window.addEventListener('click', function(event) {
-        if (!event.target.closest('.user-profile')) {
-            if (dropdown.classList.contains('show')) {
-                dropdown.classList.remove('show');
+        if (!event.target.closest('.main-header')) {
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('is-active');
             }
         }
     });

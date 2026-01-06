@@ -1,3 +1,7 @@
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
+
 <link rel="stylesheet" href="header.css">
 
 <header class="main-header">
@@ -8,28 +12,39 @@
         <h1 class="brand-name">ISCP</h1>
     </div>
 
-    <nav class="header-nav">
+    <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <nav class="header-nav" id="nav-menu">
         <ul>
-            <li><a href="home.php" class="active">Home</a></li>
-            <li><a href="Schedule.php">Schedule</a></li>
-            <li><a href="grade.php">Grades</a></li>
-       
+            <li>
+                <a href="../User_Dashboard/StudentDashboard.php" class="<?php echo ($current_page == 'StudentDashboard.php') ? 'active' : ''; ?>">Home</a>
+            </li>
+            <li>
+                <a href="../SchedulePage/Schedule.php" class="<?php echo ($current_page == 'Schedule.php') ? 'active' : ''; ?>">Schedule</a>
+            </li>
+            <li>
+                <a href="../GradePage/grade.php" class="<?php echo ($current_page == 'grade.php') ? 'active' : ''; ?>">Grades</a>
+            </li>
+            
+            <li class="profile-nav-item">
+                <div class="user-profile">
+                    <button class="profile-trigger" id="profileBtn">
+                        <span class="profile-emoji">👤</span>
+                    </button>
+                    <div id="profileDropdown" class="dropdown-content">
+                        <a href="profile.php">My Profile</a>
+                        <a href="settings.php">Change Pass</a>
+                        <hr style="border: 0; border-top: 1px solid #eee; margin: 0;">
+                        <a href="../Login_StudentPage/loginStudent.php" class="logout-btn">Log out</a>
+                    </div>
+                </div>
+            </li>
         </ul>
     </nav>
-
-    <div class="header-right">
-        <div class="user-profile">
-            <button class="profile-trigger" id="profileBtn">
-                <i class="user-icon">👤</i>
-            </button>
-            <div id="profileDropdown" class="dropdown-content">
-                <a href="profile.php">Profile</a>
-                <a href="settings.php">Change Pass</a>
-                <hr>
-                <a href="../Login_StudentPage/loginStudent.php" class="logout-btn">Log out</a>
-            </div>
-        </div>
-    </div>
 </header>
 
 <script src="header.js"></script>

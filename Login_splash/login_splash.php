@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Screen - ISCP</title>
+    <title>ISCPanians</title>
 
     <!-- CSS file for the login splash / selection screen layout -->
     <link rel="stylesheet" href="login_splash.css"> 
