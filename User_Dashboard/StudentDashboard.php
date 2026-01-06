@@ -25,7 +25,26 @@
                 </div>
             </div>
         </section>
+        <?php
+        /* ---------------------------------------------------------
+                    Ken, dito mo ilalagay yung PHP code para kunin yung data mula sa database.
+                    Ai lang to
+                    1. Hatakin mo yung GPA, Total Units, at INC count sa database.
+                    2. I-display mo sa loob ng mga card-value na div sa baba.
+                    
+                    Sample na galawan para sa Balance:
+                    if($row['balance'] == 0) {
+                        echo "Free-Educ";
+                    } else {
+                        echo "₱" . number_format($row['balance'], 2);
+                    }
 
+                    Note: Pakipalitan nalang yung mga static numbers sa baba pag may variables ka na.
+                    Kaya mo yan, Ken! Isaksak na ang SQL logic! AAHHAHHAH isaksak mo na raw AHAHHA 
+                    Ai mo nalang din kapag nalito ka HAHAHA yang baba yung papalitan mo ng dynamic data galing sa database.
+                    yang may name ko
+                    --------------------------------------------------------- */
+                ?>
         <div class="white-content-container floating-top">
             <div class="user-info-bar">
                 CAPILI, JUSTINE JAMES RAZO (2023-00075-CM-0)
