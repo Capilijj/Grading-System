@@ -25,7 +25,7 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grades - ISCP</title>
     
-    <link rel="stylesheet" href="../Header_Dashboard/header.css">
+    <link rel="stylesheet" href="../StudentHeader/header.css">
     <link rel="stylesheet" href="grade.css">
     <link rel="stylesheet" href="../Footer_Dashboard/FooterDashboard.css">
     
@@ -33,7 +33,7 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
 </head>
 <body>
 
-    <?php include '../Header_Dashboard/header.php'; ?>
+    <?php include '../StudentHeader/header.php'; ?>
 
     <div id="grade-content">
         <main class="grade-container">
@@ -170,7 +170,7 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
 
     <?php include '../Footer_Dashboard/FooterDashboard.php'; ?>
 
-    <script src="../Header_Dashboard/header.js"></script>
+    <script src="../StudentHeader/header.js"></script>
     
     <script src="grade.js"></script>
 </body>

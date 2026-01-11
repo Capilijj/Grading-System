@@ -1,0 +1,185 @@
+/* InputGradesPage/InputGrades.css */
+
+/* 1. Main Container Logic - Gaya sa Classlist para ma-fix ang footer position */
+.grades-container {
+    padding: 40px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex: 1 0 auto; /* Importante: Ito ang pumipigil sa pag-angat ng footer */
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. Glassmorphism Container para sa Header (Size remains unchanged) */
+.glass-header-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.title-section h1 { 
+    color: #ffffff; 
+    margin: 0; 
+    font-size: 2rem; 
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.title-section p { 
+    color: rgba(255, 255, 255, 0.9); 
+    margin: 8px 0 0; 
+    font-size: 1.1rem;
+}
+
+.subject-highlight { 
+    color: #ff4d4d; 
+    font-weight: bold; 
+    background: rgba(0,0,0,0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* 3. Action Section (Search & Save) */
+.action-section {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+#gradeSearch {
+    padding: 12px 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    width: 280px;
+    background: rgba(255,255,255,0.9);
+    font-size: 0.9rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+#gradeSearch:focus {
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+}
+
+.btn-save {
+    background: #043b68;
+    color: white;
+    border: 2px solid #4a90e2;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-save:hover { 
+    background: #4a90e2; 
+    transform: translateY(-2px);
+}
+
+/* 4. Table Card Styling */
+.table-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    margin-bottom: 50px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    min-height: 300px; /* Sinisiguro na may minimum space ang table */
+}
+
+.main-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left;
+}
+
+.main-table th { 
+    background: #f8f9fa; 
+    padding: 20px; 
+    color: #043b68; 
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #eee;
+}
+
+.main-table td { 
+    padding: 15px 20px; 
+    border-bottom: 1px solid #f0f0f0; 
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.main-table tr:hover {
+    background-color: #f9faff;
+}
+
+/* 5. Grade Input Styling */
+.grade-input {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #043b68;
+    transition: 0.3s;
+}
+
+.grade-input:focus {
+    border-color: #4a90e2;
+    outline: none;
+    background: #f0f7ff;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+}
+
+.text-center { text-align: center; }
+
+/* 6. Mobile Responsiveness */
+@media screen and (max-width: 850px) {
+    .content-header { 
+        flex-direction: column; 
+        text-align: center; 
+        align-items: center; 
+    }
+    .action-section { 
+        width: 100%; 
+        flex-direction: column; 
+    }
+    #gradeSearch, .btn-save { 
+        width: 100%; 
+    }
+    .grade-input { 
+        width: 100%; 
+        max-width: 80px;
+    }
+}
+
+/* 7. Footer Fix - Kinopya mula sa Classlist para sa consistency */
+footer, .dashboard-footer {
+    flex-shrink: 0; /* Pinipigilan ang footer na mapitpit o lumutang */
+    width: 100%;
+}
