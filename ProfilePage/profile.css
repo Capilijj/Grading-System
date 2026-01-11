@@ -1,0 +1,140 @@
+/* profile.css */
+body {
+    background-color: #0c225e; 
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.profile-page-container {
+    flex: 1;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-card {
+    width: 100%;
+    max-width: 1000px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.profile-header-banner {
+    background-color: #f8f9fa;
+    padding: 20px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #043b68;
+    border-bottom: 2px solid #eee;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.profile-layout {
+    display: flex;
+    padding: 40px;
+    gap: 40px;
+}
+
+.profile-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+}
+
+.avatar-container {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #ff3b30; /* Red Accent */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-upload {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-upload:hover { background-color: #d0d0d0; }
+
+.profile-right { flex: 2.5; }
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.full-width { grid-column: span 2; }
+
+.form-group label {
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.readonly-input {
+    padding: 12px;
+    background-color: #f1f3f5;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    color: #777;
+    cursor: not-allowed;
+}
+
+.editable-input {
+    padding: 12px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.editable-input:focus {
+    border-color: #043b68;
+    outline: none;
+    background-color: #fff;
+}
+
+.btn-save {
+    margin-top: 20px;
+    background-color: #043b68;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .profile-layout { flex-direction: column; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full-width { grid-column: span 1; }
+}

@@ -60,7 +60,7 @@
                 
                 <!-- Forgot password link -->
                 <div class="forgot-links">
-                    <a href="#" class="forgot-password-link">Forgot Password?</a>
+                    <a href="forgotpass.php" class="forgot-password-link">Forgot Password?</a>
                 </div>
                 
                 <!-- Submit button -->

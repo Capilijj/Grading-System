@@ -1,0 +1,133 @@
+
+/* forgotpass.css */
+
+body {
+    background-color: #0c225e; /* Iyong Main Blue Design */
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.forgot-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.forgot-card {
+    background-color: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.header-section h2 {
+    color: #043b68;
+    margin: 10px 0 5px 0;
+    font-size: 1.5rem;
+}
+
+.header-section p {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+.logo-circle {
+    width: 70px;
+    height: 70px;
+    background: white;
+    border: 2px solid #043b68;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.logo-circle img {
+    width: 80%;
+    height: auto;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.forgot-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-wrapper {
+    position: relative;
+    text-align: left;
+}
+
+.input-wrapper label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 15px;
+    padding-right: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+.input-wrapper .icon {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    color: #043b68;
+}
+
+.btn-reset {
+    background-color: #043b68; /* Blue button */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.btn-reset:hover {
+    background-color: #065494;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #043b68;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}

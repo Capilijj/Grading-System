@@ -1,0 +1,102 @@
+/* changepass.css */
+
+body {
+    background-color: #0c225e; 
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.changepass-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.changepass-card {
+    background-color: white;
+    width: 100%;
+    max-width: 480px; /* Mas malapit sa sukat ng design mo */
+    padding: 35px;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.student-label {
+    color: #0c225e; /* Red color galing sa design */
+    font-weight: 800;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #f0f0f0;
+    margin: 15px 0;
+}
+
+.pass-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spacing sa pagitan ng boxes */
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 15px;
+    padding-right: 45px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    color: #333;
+}
+
+/* Gray box icon placeholder sa dulo ng input */
+.input-wrapper .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 40px;
+    background-color: #e9ecef;
+    border-left: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.8rem;
+    pointer-events: none;
+}
+
+.btn-change-pass {
+    background-color: #043b68;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.btn-change-pass:hover {
+    background-color: #065494;
+}
+
+@media screen and (max-width: 500px) {
+    .changepass-card {
+        padding: 20px;
+        margin: 10px;
+    }
+}

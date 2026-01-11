@@ -36,8 +36,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span class="profile-emoji">👤</span>
                     </button>
                     <div id="profileDropdown" class="dropdown-content">
-                        <a href="profile.php">My Profile</a>
-                        <a href="settings.php">Change Pass</a>
+                        <a href="../ProfilePage/profile.php">My Profile</a>
+                        <a href="../ProfilePage/changepass.php">Change Pass</a>
                         <hr style="border: 0; border-top: 1px solid #eee; margin: 0;">
                         <a href="../Login_StudentPage/loginStudent.php" class="logout-btn">Log out</a>
                     </div>

@@ -71,7 +71,7 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
                             <?php
                              /* ---------------------------------------------------------
                                 Ken! Dito mo na isaksak yung sa database:
-                                ai lang to HAHA
+                                ai lang to HAHA.
                                 1. Connect mo muna yung database natin.
                                 2. Hatakin mo yung schedule nung student gamit yung ID 
                                    o Session Number nila (SELECT * FROM schedule WHERE student_id = ...).
