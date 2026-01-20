@@ -1,0 +1,115 @@
+:root {
+    --dark-blue: #0c225e;
+    --primary-blue: #043b68;
+    --orange-accent: #e67e22;
+    --bg-color: #f4f7fa;
+    --success: #2ecc71;
+    --text-muted: #8898aa;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.main-content {
+    margin-left: 280px;
+    padding: 50px 60px; /* Luwag ng gilid ng buong page */
+}
+
+.top-header { margin-bottom: 40px; }
+.top-header h1 { color: var(--dark-blue); font-weight: 800; font-size: 2rem; margin: 0; }
+.top-header p { color: #666; font-size: 0.95rem; margin-top: 5px; }
+
+/* GLASS CARD (BOXES) */
+.glass-card {
+    background: white;
+    padding: 35px; /* Luwag sa loob ng box */
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-bottom: 40px; /* Distansya sa pagitan ng mga boxes */
+    border: 1px solid #f0f2f5;
+}
+
+.card-header { margin-bottom: 30px; border-bottom: 2px solid #f8f9fa; padding-bottom: 15px; }
+.card-header h3 { font-size: 1.1rem; color: var(--dark-blue); font-weight: 700; }
+
+/* FORM GRID SPACING */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px; /* Luwag sa pagitan ng mga input fields */
+}
+
+.input-field label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.input-field input, .input-field select {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px solid #eef0f2;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    background: #fcfdfe;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-field input:focus { border-color: var(--orange-accent); }
+
+.form-footer { margin-top: 35px; display: flex; justify-content: flex-end; }
+.btn-update-system {
+    background: var(--dark-blue);
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-update-system:hover { background: var(--orange-accent); transform: translateY(-2px); }
+
+/* TABLE SPACING */
+.flex-header { display: flex; justify-content: space-between; align-items: center; }
+.search-box input { padding: 10px 20px; border: 1.5px solid #eef0f2; border-radius: 10px; width: 250px; }
+
+.data-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.data-table th { 
+    text-align: left; 
+    padding: 20px; 
+    font-size: 0.75rem; 
+    color: var(--text-muted); 
+    text-transform: uppercase; 
+    border-bottom: 2px solid #f8f9fa; 
+}
+.data-table td { 
+    padding: 25px 20px; /* Niluwagan ang rows para hindi dikit-dikit ang text */
+    border-bottom: 1px solid #f8f9fa; 
+    font-size: 0.95rem; 
+}
+
+/* BADGES & ICONS */
+.status-badge { padding: 8px 16px; border-radius: 10px; font-size: 0.75rem; font-weight: 800; }
+.status-active { background: #e8f5e9; color: var(--success); }
+.status-archived { background: #f1f3f5; color: #adb5bd; }
+
+.btn-icon {
+    background: white;
+    border: 1.5px solid #eef0f2;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: 0.3s;
+}
+
+.btn-icon:hover { background: #f8f9fa; border-color: var(--primary-blue); }

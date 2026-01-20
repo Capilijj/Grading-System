@@ -1,0 +1,151 @@
+:root {
+    --dark-blue: #0c225e;
+    --primary-blue: #043b68;
+    --orange-accent: #e67e22;
+    --bg-color: #f4f7fa;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.main-content {
+    margin-left: 280px;
+    padding: 50px 60px;
+}
+
+/* --- COURSE TABS --- */
+.course-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.tab-btn {
+    padding: 12px 25px;
+    border: none;
+    background: white;
+    border-radius: 12px;
+    font-weight: 700;
+    color: #888;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    transition: 0.3s;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background: var(--dark-blue);
+    color: white;
+}
+
+/* --- MAIN TABLE (AVERAGE VIEW) --- */
+.glass-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.flex-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.highlight { color: var(--orange-accent); font-weight: 800; }
+
+.search-box input {
+    padding: 12px 20px;
+    border: 1.5px solid #eee;
+    border-radius: 10px;
+    width: 300px;
+    outline: none;
+}
+
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { text-align: left; padding: 20px; color: #999; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #f4f7fa; }
+.data-table td { padding: 25px 20px; border-bottom: 1px solid #f4f7fa; font-size: 0.95rem; }
+
+.average-val { font-weight: 800; font-size: 1.2rem; color: var(--dark-blue); }
+
+.btn-update-trigger {
+    background: var(--dark-blue);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* --- MODAL POP-UP --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    background: white;
+    width: 850px;
+    padding: 45px;
+    border-radius: 25px;
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.close-modal { position: absolute; top: 25px; right: 30px; font-size: 2rem; cursor: pointer; color: #ccc; }
+
+/* --- DETAILED LIST STYLE (2ND IMAGE FORMAT) --- */
+.modal-grade-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 15px; /* Spacing para magmukhang hiwa-hiwalay ang rows */
+}
+
+.modal-row td {
+    padding: 20px;
+    background: #fcfdfe;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    text-align: center;
+}
+
+.modal-row td:first-child { border-left: 1px solid #f1f1f1; border-radius: 15px 0 0 15px; text-align: left; }
+.modal-row td:last-child { border-right: 1px solid #f1f1f1; border-radius: 0 15px 15px 0; }
+
+.subj-name { font-weight: 700; color: var(--primary-blue); }
+
+.modal-input {
+    width: 60px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 800;
+}
+
+/* --- STATUS BADGES --- */
+.status-badge { padding: 6px 15px; border-radius: 8px; font-size: 0.75rem; font-weight: 900; }
+.status-p { background: #e8f5e9; color: var(--success); }
+.status-inc { background: #fff4e5; color: var(--orange-accent); }
+.status-f { background: #feebeb; color: var(--danger); }
+
+.btn-save {
+    width: 100%;
+    padding: 18px;
+    background: var(--dark-blue);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-weight: 800;
+    margin-top: 30px;
+    cursor: pointer;
+}
