@@ -1,5 +1,4 @@
-/* Student_Management/Studentmanagement.css */
-
+/* --- ROOT VARIABLES --- */
 :root {
     --primary-blue: #0c225e;
     --secondary-blue: #1a3a8a;
@@ -7,12 +6,14 @@
     --text-dark: #333;
     --bg-light: #f4f7f6;
     --white: #ffffff;
+    /* Status Colors */
+    --active: #27ae60;
     --pending: #f39c12;
-    --regular: #27ae60;
-    --irregular: #2980b9;
-    --dropped: #c0392b;
+    --leave: #2980b9;
+    --resigned: #c0392b;
 }
 
+/* --- GLOBAL STYLES --- */
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-light);
@@ -20,16 +21,15 @@ body {
     color: var(--text-dark);
 }
 
-/* 1. AYOS SA MAIN CONTENT - Siguraduhin na ang flex container ay tama */
 .main-content {
     padding: 2rem;
-    margin-left: 260px; /* Base sa sidebar width */
+    margin-left: 260px; /* Offset para sa sidebar */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Header Styles */
+/* --- HEADER & SEARCH --- */
 .top-header {
     display: flex;
     justify-content: space-between;
@@ -64,51 +64,44 @@ body {
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    transition: 0.3s;
 }
 
-/* Alert Box for Success/Error Messages */
-.alert-box {
-    margin-top: 15px;
-    padding: 12px;
-    background: white;
-    border-left: 5px solid var(--accent-gold);
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    color: var(--primary-blue);
-    font-weight: 600;
+.search-bar button:hover {
+    background: var(--secondary-blue);
 }
 
-/* 2. TABLE CONTAINER - Ito ang hahawak sa overflow */
+/* --- TABLE CONTAINER FIX (HINDI BITIN) --- */
 .table-container-wide {
     width: 100%;
-    overflow-x: auto; /* Pinapayagan ang horizontal scroll sa loob */
-    padding-bottom: 1rem;
+    overflow-x: auto; /* Scroll pakanan kung mahaba ang table */
+    padding-bottom: 1.5rem;
 }
 
-/* 3. GLASS CARD FIX - Inalis ang width limitation */
 .glass-card {
     background: var(--white);
     border-radius: 15px;
     padding: 1.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    width: fit-content; /* Pinapahaba ang card base sa luwang ng table */
-    min-width: 100%;    /* Pero hindi liliit sa 100% ng view */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    
+    /* Ito ang sikreto para sumunod ang card sa haba ng table */
+    width: fit-content; 
+    min-width: 100%;    
     box-sizing: border-box;
 }
 
-/* Table Design */
 .full-info-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.85rem;
-    white-space: nowrap; /* Pinipigilan ang pag-wrap ng text para hindi maging vertical ang table */
+    font-size: 0.9rem;
+    white-space: nowrap; /* Pinipigilan ang pag-wrap ng text */
 }
 
 .full-info-table th {
     background: #f8f9fa;
     color: var(--primary-blue);
     text-align: left;
-    padding: 1rem;
+    padding: 1.2rem 1rem;
     border-bottom: 2px solid #eee;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -124,28 +117,44 @@ body {
     background: #f9fbff;
 }
 
-/* Truncate long addresses if needed */
-.addr-cell {
-    max-width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Status Badges */
+/* --- STATUS BADGES --- */
 .badge-status {
     padding: 6px 12px;
     border-radius: 20px;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
+    display: inline-block;
 }
 
+.badge-status.active { background: #e8f5e9; color: var(--active); }
 .badge-status.pending { background: #fff3e0; color: var(--pending); }
-.badge-status.regular { background: #e8f5e9; color: var(--regular); }
-.badge-status.irregular { background: #e3f2fd; color: var(--irregular); }
-.badge-status.dropped { background: #ffebee; color: var(--dropped); }
+.badge-status.on-leave { background: #e3f2fd; color: var(--leave); }
+.badge-status.resigned { background: #ffebee; color: var(--resigned); }
 
-/* --- MODAL STYLES --- */
+/* --- ACTION BUTTONS --- */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.8rem;
+    transition: 0.2s;
+}
+
+.btn-edit { background: var(--secondary-blue); color: white; }
+.btn-edit:hover { background: var(--primary-blue); color: white; }
+
+.btn-delete { background: var(--resigned); color: white; }
+.btn-delete:hover { background: #a93226; color: white; }
+
+/* --- MODAL SYSTEM --- */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -169,8 +178,6 @@ body {
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     animation: modalPop 0.3s ease-out;
 }
-
-.edit-box { width: 700px; }
 
 @keyframes modalPop {
     from { opacity: 0; transform: translateY(-20px); }
@@ -226,23 +233,6 @@ body {
 
 .btn-primary { background: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 .btn-secondary { background: #e2e8f0; color: #475569; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-
-/* Action Buttons */
-.btn-edit, .btn-delete {
-    padding: 6px 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.8rem;
-    transition: 0.2s;
-}
-
-.btn-edit { background: var(--secondary-blue); color: white; }
-.btn-edit:hover { background: var(--primary-blue); color: white; }
-
-.btn-delete { background: var(--dropped); color: white; }
-.btn-delete:hover { background: #a93226; color: white; }
 
 /* Code element styling for IDs */
 code {

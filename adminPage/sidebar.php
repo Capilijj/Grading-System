@@ -12,9 +12,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </div>
 
     <nav class="sidebar-nav">
-        <a href="../Student_management/Studentmanagement.php" 
-           class="nav-item <?= ($current_page == 'Studentmanagement.php') ? 'active' : '' ?>">
+        <a href="../User_management/Usermanagement.php" 
+           class="nav-item <?= ($current_page == 'Usermanagement.php') ? 'active' : '' ?>">
             <span class="icon">👥</span> User Management
+        </a>
+
+        <a href="../Student_Management/Studentmanagement.php" 
+           class="nav-item <?= ($current_page == 'Studentmanagement.php') ? 'active' : '' ?>">
+            <span class="icon">👨‍🎓</span> Student Management
+        </a>
+
+        <a href="../Professor_management/Professormanagement.php" 
+           class="nav-item <?= ($current_page == 'Professormanagement.php') ? 'active' : '' ?>">
+            <span class="icon">👨‍🏫</span> Professor Management
         </a>
 
         <a href="../academic_control/academicyear.php" 
