@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard - ISCP</title>
     
-    <link rel="stylesheet" href="../StudentHeader/header.css">
+    <link rel="stylesheet" href="Header/header.css">
     <link rel="stylesheet" href="StudentDashboard.css">
-    <link rel="stylesheet" href="../Footer_Dashboard/FooterDashboard.css">
+    <link rel="stylesheet" href="Footer/FooterDashboard.css">
 </head>
 <body>
 
-    <?php include '../StudentHeader/header.php'; ?>
+    <?php include 'Header/header.php'; ?>
 
     <main class="dashboard-container">
         
@@ -139,7 +139,7 @@
         </section>
     </main>
 
-    <?php include '../Footer_Dashboard/FooterDashboard.php'; ?>
-    <script src="../StudentHeader/header.js"></script>
+    <?php include 'Footer/FooterDashboard.php'; ?>
+    <script src="Header/header.js"></script>
 </body>
 </html>

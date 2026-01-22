@@ -2,12 +2,12 @@
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
-<link rel="stylesheet" href="../ProfessorHeader/ProfessorHeader.css">
+<link rel="stylesheet" href="Header/ProfessorHeader.css">
 
 <header class="main-header">
     <div class="header-left">
         <div class="logo-container">
-            <img src="../image/logo.png" alt="ISCP Logo" class="nav-logo">
+            <img src="/image/logo.png" alt="ISCP Logo" class="nav-logo">
         </div>
         <div class="h-title">
             <span class="main-t">ISCP</span>
@@ -23,9 +23,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     <nav class="header-nav" id="nav-menu">
         <ul>
-            <li><a href="../Professor_Dashboard/ProfessorDashboard.php" class="<?php echo ($current_page == 'ProfessorDashboard.php') ? 'active' : ''; ?>">Dashboard</a></li>
-            <li><a href="../ClasslistPage/Classlist.php" class="<?php echo ($current_page == 'Classlist.php') ? 'active' : ''; ?>">Class List</a></li>
-            <li><a href="../InputGradesPage/InputGrades.php" class="<?php echo ($current_page == 'InputGrades.php') ? 'active' : ''; ?>">Input Grades</a></li>
+            <li><a href="/Professor_Dashboard/ProfessorDashboard.php" class="<?php echo ($current_page == 'ProfessorDashboard.php') ? 'active' : ''; ?>">Dashboard</a></li>
+            <li><a href="/Professor_Dashboard/ClasslistPage/Classlist.php" class="<?php echo ($current_page == 'Classlist.php') ? 'active' : ''; ?>">Class List</a></li>
+            <li><a href="/Professor_Dashboard/InputGradesPage/InputGrades.php" class="<?php echo ($current_page == 'InputGrades.php') ? 'active' : ''; ?>">Input Grades</a></li>
             
             <li class="profile-nav-item">
                 <div class="user-profile">
@@ -40,10 +40,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <span>Faculty Member</span>
                         </div>
                         <hr>
-                        <a href="../ProfilePage/profile.php">👤 My Profile</a>
-                        <a href="../ProfilePage/changepass.php">🔑 Change Password</a>
+                        <a href="/Professor_Dashboard/ProfilePage/profile.php">👤 My Profile</a>
+                        <a href="/Professor_Dashboard/ProfilePage/changepass.php">🔑 Change Password</a>
                         <hr>
-                        <a href="../Login_splash/login_splash.php" class="logout-btn">Log out</a>
+                        <a href="/Login_splash/login_splash.php" class="logout-btn">Log out</a>
                     </div>
                 </div>
             </li>
@@ -51,4 +51,4 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </nav>
 </header>
 
-<script src="../ProfessorHeader/ProfessorHeader.js"></script>
+<script src="Header/ProfessorHeader.js"></script>

@@ -28,7 +28,7 @@
                     <img src="../../image/logo.png" alt="ISCP Logo">
                 </div>
                 <h2>Forgot Password?</h2>
-                <p>Enter your student email to reset your password.</p>
+                <p>Enter your email to reset your password.</p>
             </div>
 
             <hr class="divider">
@@ -36,14 +36,14 @@
             <form action="#" method="POST" class="forgot-form">
                 
                 <div class="input-wrapper">
-                    <label>Student Email Address</label>
+                    <label>Email Address</label>
                     <input type="email" name="email" placeholder="e.g. j..2023@iscp.edu.ph" required>
                     <span class="icon">📧</span>
                 </div>
 
                 <div class="form-footer">
                     <button type="submit" class="btn-reset">Send Reset Link</button>
-                    <a href="../Login_FacultyPage/loginFaculty.php" class="back-link">Back to Login</a>
+                    <a href="../loginFaculty.php" class="back-link">Back to Login</a>
                 </div>
 
             </form>

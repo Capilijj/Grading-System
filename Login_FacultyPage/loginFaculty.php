@@ -19,14 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Faculty Login - ISCP</title>
     
     <link rel="stylesheet" href="loginFaculty.css">
-    <link rel="stylesheet" href="../SlideShows/slideshow.css"> 
+    <link rel="stylesheet" href="../Login_splash/SlideShows/slideshow.css"> 
 </head>
 <body>
 
     <div class="container">
 
         <?php 
-            require_once '../SlideShows/slideshow.php'; 
+            require_once '../Login_splash/SlideShows/slideshow.php'; 
         ?>
             
         <div class="form-section">
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 
                 <div class="forgot-links">
-                    <a href="forgotpass.php" class="forgot-password-link">Forgot Password?</a>
+                    <a href="../Login_FacultyPage/ForgotPass/forgotpass.php" class="forgot-password-link">Forgot Password?</a>
                 </div>
 
                 <button type="submit" class="sign-in-button faculty-button-style">
@@ -70,7 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>     
 
-    <script src="../SlideShows/slideshow.js"></script>
-    <script src="loginFaculty.js"></script>
+    <script src="../Login_splash/SlideShows/slideshow.js"></script>
 </body>
 </html>

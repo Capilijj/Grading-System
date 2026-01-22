@@ -43,7 +43,7 @@
 
                 <div class="form-footer">
                     <button type="submit" class="btn-reset">Send Reset Link</button>
-                    <a href="../Login_StudentPage/loginStudent.php" class="back-link">Back to Login</a>
+                    <a href="../loginStudent.php" class="back-link">Back to Login</a>
                 </div>
 
             </form>

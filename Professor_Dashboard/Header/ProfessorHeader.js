@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 menuToggle.classList.remove('is-active');
             }
         }
-        if (profileBtn && !profileBtn.contains(event.target)) {
+        if (!event.target.closest('.user-profile')) {
             dropdown.classList.remove('show');
         }
     });

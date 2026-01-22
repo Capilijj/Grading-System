@@ -17,13 +17,13 @@ $student_info = "CAPILI, JUSTINE JAMES RAZO (2023-00075-CM-0)";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password - ISCP</title>
     
-    <link rel="stylesheet" href="../StudentHeader/header.css">
+    <link rel="stylesheet" href="../Header/header.css">
     <link rel="stylesheet" href="changepass.css">
-    <link rel="stylesheet" href="../Footer_Dashboard/FooterDashboard.css">
+    <link rel="stylesheet" href="../Footer/FooterDashboard.css">
 </head>
 <body>
 
-    <?php include '../StudentHeader/header.php'; ?>
+    <?php include '../Header/header.php'; ?>
 
     <main class="changepass-container">
         <div class="changepass-card">
@@ -61,8 +61,8 @@ $student_info = "CAPILI, JUSTINE JAMES RAZO (2023-00075-CM-0)";
         </div>
     </main>
 
-    <?php include '../Footer_Dashboard/FooterDashboard.php'; ?>
+    <?php include '../Footer/FooterDashboard.php'; ?>
 
-    <script src="../StudentHeader/header.js"></script>
+    <script src="../Header/header.js"></script>
 </body>
 </html>

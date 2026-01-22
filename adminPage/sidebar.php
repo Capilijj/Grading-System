@@ -12,8 +12,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </div>
 
     <nav class="sidebar-nav">
-        <a href="../user_management/usermanagement.php" 
-           class="nav-item <?= ($current_page == 'usermanagement.php') ? 'active' : '' ?>">
+        <a href="../Student_management/Studentmanagement.php" 
+           class="nav-item <?= ($current_page == 'Studentmanagement.php') ? 'active' : '' ?>">
             <span class="icon">👥</span> User Management
         </a>
 

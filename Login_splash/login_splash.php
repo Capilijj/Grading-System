@@ -6,9 +6,9 @@
     <title>ISCPanians</title>
 
     <!-- CSS file for the login splash / selection screen layout -->
-    <link rel="stylesheet" href="login_splash.css"> 
+    <link rel="stylesheet" href="../Login_splash/login_splash.css"> 
     <!-- CSS file for slideshow styling -->
-    <link rel="stylesheet" href="../SlideShows/slideshow.css"> 
+    <link rel="stylesheet" href="../Login_splash/SlideShows/slideshow.css"> 
 </head>
 <body>
 
@@ -17,7 +17,7 @@
 
         <!-- PHP: Includes the slideshow component -->
         <?php 
-            require_once '../SlideShows/slideshow.php'; 
+            require_once '../Login_splash/SlideShows/slideshow.php'; 
         ?>
 
         <!-- Right-side section for user selection -->
@@ -65,6 +65,6 @@
     </div>     
 
     <!-- JavaScript file for slideshow functionality -->
-    <script src="../SlideShows/slideshow.js"></script>
+    <script src="../Login_splash/SlideShows/slideshow.js"></script>
 </body>
 </html>

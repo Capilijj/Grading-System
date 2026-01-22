@@ -1,5 +1,13 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
+$current_dir = dirname($_SERVER['PHP_SELF']);
+
+// Determine the base path relative to User_Dashboard
+if (strpos($current_dir, '/User_Dashboard') === 0 && $current_dir !== '/User_Dashboard') {
+    $base_path = '../';
+} else {
+    $base_path = '';
+}
 ?>
 
 <link rel="stylesheet" href="header.css">
@@ -21,13 +29,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <nav class="header-nav" id="nav-menu">
         <ul>
             <li>
-                <a href="../User_Dashboard/StudentDashboard.php" class="<?php echo ($current_page == 'StudentDashboard.php') ? 'active' : ''; ?>">Home</a>
+                <a href="<?php echo $base_path; ?>StudentDashboard.php" class="<?php echo ($current_page == 'StudentDashboard.php') ? 'active' : ''; ?>">Home</a>
             </li>
             <li>
-                <a href="../SchedulePage/Schedule.php" class="<?php echo ($current_page == 'Schedule.php') ? 'active' : ''; ?>">Schedule</a>
+                <a href="<?php echo $base_path; ?>SchedulePage/schedule.php" class="<?php echo ($current_page == 'schedule.php') ? 'active' : ''; ?>">Schedule</a>
             </li>
             <li>
-                <a href="../GradePage/grade.php" class="<?php echo ($current_page == 'grade.php') ? 'active' : ''; ?>">Grades</a>
+                <a href="<?php echo $base_path; ?>GradePage/grade.php" class="<?php echo ($current_page == 'grade.php') ? 'active' : ''; ?>">Grades</a>
             </li>
             
             <li class="profile-nav-item">
@@ -36,10 +44,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span class="profile-emoji">👤</span>
                     </button>
                     <div id="profileDropdown" class="dropdown-content">
-                        <a href="../ProfilePage/profile.php">My Profile</a>
-                        <a href="../ProfilePage/changepass.php">Change Pass</a>
+                        <a href="../../User_Dashboard/ProfilePage/profile.php">My Profile</a>
+                        <a href="../../User_Dashboard/ProfilePage/changepass.php">Change Pass</a>
                         <hr style="border: 0; border-top: 1px solid #eee; margin: 0;">
-                        <a href="../Login_StudentPage/loginStudent.php" class="logout-btn">Log out</a>
+                        <a href="../../Login_StudentPage/loginStudent.php" class="logout-btn">Log out</a>
                     </div>
                 </div>
             </li>

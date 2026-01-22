@@ -7,10 +7,10 @@
     <title>Student Login - ISCP</title>
     
     <!-- CSS file for Student Login page styling -->
-    <link rel="stylesheet" href="loginStudent.css">
+    <link rel="stylesheet" href="../Login_StudentPage/loginStudent.css">
     
     <!-- CSS file for slideshow styling -->
-    <link rel="stylesheet" href="../SlideShows/slideshow.css"> 
+    <link rel="stylesheet" href="../Login_splash/SlideShows/slideshow.css"> 
 </head>
 <body>
 
@@ -19,7 +19,7 @@
 
         <!-- PHP: Includes the slideshow component -->
         <?php 
-            require_once '../SlideShows/slideshow.php'; 
+            require_once '../Login_splash/SlideShows/slideshow.php'; 
         ?>
 
         <!-- Right section: Student login form -->
@@ -60,7 +60,7 @@
                 
                 <!-- Forgot password link -->
                 <div class="forgot-links">
-                    <a href="forgotpass.php" class="forgot-password-link">Forgot Password?</a>
+                    <a href="../Login_StudentPage/ForgotPass/forgotpass.php" class="forgot-password-link">Forgot Password?</a>
                 </div>
                 
                 <!-- Submit button -->
@@ -80,9 +80,9 @@
     </div>     
 
     <!-- JavaScript file for Student Login interactions -->
-    <script src="loginStudent.js"></script>
+    <script src="../Login_splash/loginStudent.js"></script>
 
     <!-- JavaScript file for slideshow functionality -->
-    <script src="../SlideShows/slideshow.js"></script>
+    <script src="../Login_splash/SlideShows/slideshow.js"></script>
 </body>
 </html>

@@ -16,13 +16,13 @@ $faculty_name = "PROF. RAZO, JUSTINE JAMES";
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
-    <link rel="stylesheet" href="../ProfessorHeader/ProfessorHeader.css">
+    <link rel="stylesheet" href="Header/ProfessorHeader.css">
     <link rel="stylesheet" href="ProfessorDashboard.css">
-    <link rel="stylesheet" href="../Footer_Dashboard/FooterDashboard.css">
+    <link rel="stylesheet" href="../User_Dashboard/Footer/FooterDashboard.css">
 </head>
 <body>
 
-    <?php include '../ProfessorHeader/ProfessorHeader.php'; ?>
+    <?php include 'Header/ProfessorHeader.php'; ?>
 
     <main class="faculty-main">
         <section class="faculty-hero">
@@ -101,9 +101,9 @@ $faculty_name = "PROF. RAZO, JUSTINE JAMES";
         </div>
     </main>
 
-    <?php include '../Footer_Dashboard/FooterDashboard.php'; ?>
+    <?php include '../User_Dashboard/Footer/FooterDashboard.php'; ?>
 
-    <script src="../ProfessorHeader/ProfessorHeader.js"></script>
+    <script src="Header/ProfessorHeader.js"></script>
     <script src="ProfessorDashboard.js"></script>
 </body>
 </html>

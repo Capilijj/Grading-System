@@ -25,15 +25,15 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grades - ISCP</title>
     
-    <link rel="stylesheet" href="../StudentHeader/header.css">
+    <link rel="stylesheet" href="../Header/header.css">
     <link rel="stylesheet" href="grade.css">
-    <link rel="stylesheet" href="../Footer_Dashboard/FooterDashboard.css">
+    <link rel="stylesheet" href="../Footer/FooterDashboard.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
-    <?php include '../StudentHeader/header.php'; ?>
+    <?php include '../Header/header.php'; ?>
 
     <div id="grade-content">
         <main class="grade-container">
@@ -168,9 +168,9 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
         </main>
     </div>
 
-    <?php include '../Footer_Dashboard/FooterDashboard.php'; ?>
+    <?php include '../Footer/FooterDashboard.php'; ?>
 
-    <script src="../StudentHeader/header.js"></script>
+    <script src="../Header/header.js"></script>
     
     <script src="grade.js"></script>
 </body>

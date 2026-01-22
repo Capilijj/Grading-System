@@ -1,22 +1,21 @@
-//sample lang to ken 
-
 <?php
-// Database connection parameters
-$host = "localhost";
-$port = 4306;
-$db_name = "";
-$username = "root";
-$password = "";
+// 1. I-set ang iyong server details
+$serverName = "DESKTOP-LSU5CF3\SQLEXPRESS"; 
+$database   = "ISCP";
 
-// Create a new database connection using MySQLi
-$conn = new mysqli($host, $username, $password, $db_name, $port);
+try {
+    /**
+     * PAGBUO NG CONNECTION STRING
+     */
+    $conn = new PDO("sqlsrv:server=$serverName;Database=$database;TrustServerCertificate=true", "", "");
+    
+    // I-set ang error mode para makita natin kung may mali sa backend
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+    // TANGGAL ANG ECHO DITO PARA WALANG LUMALABAS SA SCREEN
+
+} catch (PDOException $e) {
+    // Optional: Iwanan itong die() para huminto ang system kapag walang database
+    die("Database Connection Error: " . $e->getMessage());
 }
-
-$conn->set_charset("utf8mb4");
-
 ?>
-//sample lang to ken 

@@ -16,14 +16,14 @@ $students = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Grades - ISCP Faculty</title>
     
-    <link rel="stylesheet" href="../ProfessorHeader/ProfessorHeader.css">
-    <link rel="stylesheet" href="../Professor_Dashboard/ProfessorDashboard.css">
-    <link rel="stylesheet" href="../Footer_Dashboard/FooterDashboard.css">
+    <link rel="stylesheet" href="../Header/ProfessorHeader.css">
+    <link rel="stylesheet" href="../ProfessorDashboard.css">
+    <link rel="stylesheet" href="../../User_Dashboard/Footer/FooterDashboard.css">
     <link rel="stylesheet" href="InputGrades.css">
 </head>
 <body>
 
-    <?php include '../ProfessorHeader/ProfessorHeader.php'; ?>
+    <?php include '../Header/ProfessorHeader.php'; ?>
 
     <main class="grades-container">
         <div class="glass-header-container">
@@ -72,9 +72,9 @@ $students = [
         </section>
     </main>
 
-    <?php include '../Footer_Dashboard/FooterDashboard.php'; ?>
+    <?php include '../../User_Dashboard/Footer/FooterDashboard.php'; ?>
 
-    <script src="../ProfessorHeader/ProfessorHeader.js"></script>
+    <script src="../Header/ProfessorHeader.js"></script>
     <script src="InputGrades.js"></script>
 </body>
 </html>
