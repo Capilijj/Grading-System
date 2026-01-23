@@ -133,3 +133,18 @@ body {
     font-size: 0.75rem;
     font-weight: bold;
 }
+.day-label {
+            background: #043b68;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+        }
+        .time-highlight {
+            color: #cc0000;
+            font-weight: 600;
+        }

@@ -1,0 +1,91 @@
+/* changepass.css */
+body {
+    background-color: #0c225e; 
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.changepass-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.changepass-card {
+    background: white;
+    width: 100%;
+    max-width: 400px; /* Mas maliit nang konti dahil 2 fields na lang */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    text-align: center;
+    z-index: 1;
+}
+
+.student-label {
+    font-weight: 800;
+    color: #043b68;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.pass-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-sizing: border-box;
+}
+
+.input-wrapper input:focus {
+    border-color: #043b68;
+    outline: none;
+    background-color: #fff;
+}
+
+.input-wrapper .icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.btn-change-pass {
+    background-color: #043b68;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.btn-change-pass:hover {
+    background-color: #032d50;
+    transform: translateY(-2px);
+}

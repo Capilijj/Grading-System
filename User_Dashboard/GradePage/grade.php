@@ -1,20 +1,42 @@
 <?php
+session_start();
+// Database connection path - Original Path
+require_once __DIR__ . '/../../Database/database_Connection.php';
+
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Check if student is logged in
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Student') {
+    header("Location: ../../Login_StudentPage/loginStudent.php");
+    exit();
+}
+
+$studentID = $_SESSION['studentID'] ?? '';
+
+try {
+    $sql = "{call sp_GetStudentGrades(?)}";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$studentID]);
+    $all_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $studentInfo = $all_data[0] ?? null;
+} catch (Exception $e) {
+    $errorMsg = $e->getMessage();
+}
+
 /**
  * AUTOMATED ACADEMIC YEAR & SEMESTER LOGIC
  */
-$currentMonth = (int)date('n'); 
+$currentMonth = (int)date('n');
 $currentYear = (int)date('Y');
-
 if ($currentMonth >= 6 && $currentMonth <= 11) {
     $semester = "First Semester";
     $academicYear = $currentYear . "-" . ($currentYear + 1);
 } else {
     $semester = "Second Semester";
-    if ($currentMonth >= 1 && $currentMonth <= 5) {
-        $academicYear = ($currentYear - 1) . "-" . $currentYear;
-    } else {
-        $academicYear = $currentYear . "-" . ($currentYear + 1);
-    }
+    $academicYear = ($currentMonth >= 1 && $currentMonth <= 5) ? ($currentYear - 1) . "-" . $currentYear : $currentYear . "-" . ($currentYear + 1);
 }
 ?>
 
@@ -30,6 +52,19 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
     <link rel="stylesheet" href="../Footer/FooterDashboard.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        /* CSS Fix para sa dropdown visibility */
+        header { position: relative; z-index: 1000 !important; }
+        .grade-container { position: relative; z-index: 1; }
+        .gpa-value { font-weight: bold; color: #d35400; }
+        .badge-status { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        
+        /* Status Colors */
+        .passed { color: #27ae60; font-weight: bold; }
+        .failed { color: #e74c3c; font-weight: bold; }
+        .pending { color: #f39c12; font-weight: bold; }
+    </style>
 </head>
 <body>
 
@@ -40,7 +75,7 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
             
             <div class="student-info-card">
                 <div class="student-name-id">
-                    CAPILI, JUSTINE JAMES RAZO (2023-00075-CM-0)
+                    <?php echo strtoupper($studentInfo['fullName'] ?? 'STUDENT NAME'); ?> (<?php echo htmlspecialchars($studentID); ?>)
                 </div>
                 
                 <div class="academic-details">
@@ -59,23 +94,26 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
                         </div>
                         <div class="info-item">
                             <label>Course Code & Description</label>
-                            <span>BSIT-CM BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY (QUEZON CITY CAMPUS)</span>
+                            <span><?php echo htmlspecialchars($studentInfo['courseDescription'] ?? 'N/A'); ?></span>
                         </div>
                     </div>
 
                     <div class="gpa-section">
-                        <label>GPA (excludes NSTP and subjects with non-numeric ratings)</label>
-                        <span class="gpa-value">Grades Not Complete</span>
+                        <label>GPA (1.00 is Highest / Displayed if all grades are in)</label>
+                        <span class="gpa-value">
+                            <?php 
+                                // Ito ay magdi-display ng 1.00 - 5.00 o "Grades Not Complete"
+                                echo $studentInfo['currentGPA'] ?? 'Grades Not Complete'; 
+                            ?>
+                        </span>
                     </div>
                 </div>
             </div>
 
             <div class="white-content-container">
                 <div class="grade-header">
-                    <span>Final Grades</span>
-                    <button onclick="downloadGradePDF()" class="btn-download">
-                        Download Grade 📥
-                    </button>
+                    <span>Final Grades (Uno Scale)</span>
+                    <button onclick="downloadGradePDF()" class="btn-download">Download Grade 📥</button>
                 </div>
                 
                 <div class="grade-table-wrapper">
@@ -92,75 +130,32 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            /* ---------------------------------------------------------
-                               PARA KAY KEN (DATABASE LOGIC):
-                               
-                               1. I-fetch ang student grades base sa Session ID.
-                               2. I-calculate ang GPA base sa unit * grade.
-                               3. Gamitin ang 'while' loop para sa bawat subject.
-
-                               Sample Loop:
-                               while($row = $result->fetch_assoc()) {
-                                   $counter++;
-                                   echo "<tr>
-                                            <td>$counter</td>
-                                            <td>" . $row['code'] . "</td>
-                                            <td>" . $row['desc'] . "</td>
-                                            <td>" . $row['faculty'] . "</td>
-                                            <td>" . $row['units'] . "</td>
-                                            <td>" . ($row['grade'] ?? '---') . "</td>
-                                            <td><span class='status-passed'>" . $row['status'] . "</span></td>
-                                         </tr>";
-                               }
-                               --------------------------------------------------------- */
+                            <?php 
+                            $counter = 0;
+                            if (!empty($all_data) && isset($all_data[0]['subjectCode'])):
+                                foreach ($all_data as $row): 
+                                    $counter++;
+                                    $statusClass = strtolower($row['gradeStatus']);
                             ?>
-
-                            <tr>
-                                <td>1</td>
-                                <td>COMP 015</td>
-                                <td>Fundamentals of Research</td>
-                                <td>AVENA, LEANDRO IV BADAL</td>
-                                <td>3.0</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>COMP 017</td>
-                                <td>Multimedia</td>
-                                <td>ESCOBER, AIN GEUEL ESPEJO</td>
-                                <td>3.0</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>COMP 018</td>
-                                <td>Database Administration</td>
-                                <td>DOROMAL, CHERRY</td>
-                                <td>3.0</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>ELEC IT-E1</td>
-                                <td>IT Elective 1</td>
-                                <td>MONZON, KEZAIAH E</td>
-                                <td>3.0</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>GEED 006</td>
-                                <td>Art Appreciation/Pagpapahalaga sa Sining</td>
-                                <td>DOLOROSA, RODRIGO S.</td>
-                                <td>3.0</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                                <tr>
+                                    <td><?php echo $counter; ?></td>
+                                    <td><?php echo htmlspecialchars($row['subjectCode']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['subjectDesc']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['facultyName']); ?></td>
+                                    <td><?php echo number_format($row['units'] ?? 3.0, 1); ?></td>
+                                    <td style="font-weight: bold;"><?php echo $row['finalGrade'] ?? '---'; ?></td>
+                                    <td>
+                                        <span class="badge-status <?php echo $statusClass; ?>">
+                                            <?php echo $row['gradeStatus']; ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php 
+                                endforeach; 
+                            else:
+                                echo "<tr><td colspan='7' style='text-align:center; padding: 20px;'>No subjects assigned.</td></tr>";
+                            endif; 
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -171,7 +166,6 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
     <?php include '../Footer/FooterDashboard.php'; ?>
 
     <script src="../Header/header.js"></script>
-    
     <script src="grade.js"></script>
 </body>
 </html>

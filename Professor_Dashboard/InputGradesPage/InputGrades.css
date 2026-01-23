@@ -183,3 +183,31 @@ footer, .dashboard-footer {
     flex-shrink: 0; /* Pinipigilan ang footer na mapitpit o lumutang */
     width: 100%;
 }
+
+            /* Action column style */
+            .btn-row-save {
+                background: #27ae60;
+                color: white;
+                border: none;
+                padding: 5px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.85rem;
+                transition: 0.3s;
+            }
+            .btn-row-save:hover { background: #219150; }
+            .btn-row-save:disabled { background: #ccc; }
+
+            /* Print styling para sa PDF */
+            @media print {
+                .action-section, .actions-col, .btn-row-save, .top-header, footer, .dashboard-footer, #gradeSearch {
+                    display: none !important;
+}
+.grades-container { padding: 0; }
+.glass-header-container { box-shadow: none; border: none; color: black; }
+.title-section h1 { color: black; text-shadow: none; }
+.title-section p { color: #333; }
+.table-card { box-shadow: none; }
+.main-table th { background: #eee !important; color: black !important; }
+.grade-input { border: none; background: transparent; }
+}

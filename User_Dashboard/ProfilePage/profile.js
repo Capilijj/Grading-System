@@ -1,19 +1,26 @@
+// profile.js
 document.addEventListener('DOMContentLoaded', function() {
-    const fileInput = document.getElementById('fileInput');
-    const profileDisplay = document.getElementById('profileDisplay');
+    const toast = document.getElementById('toast');
+    const closeBtn = document.getElementById('closeToast');
 
-    // Kapag pumili ng file si user
-    if (fileInput) {
-        fileInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Papalitan nito yung src ng <img> tag para makita yung preview
-                    profileDisplay.setAttribute('src', e.target.result);
-                }
-                reader.readAsDataURL(file);
-            }
+    // Kapag may status na (success or error), i-auto hide pagkatapos ng 4 seconds
+    if (toast.classList.contains('success') || toast.classList.contains('error')) {
+        setTimeout(() => {
+            hideToast();
+        }, 4000);
+    }
+
+    // Manual close button
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            hideToast();
         });
+    }
+
+    function hideToast() {
+        toast.style.transform = "translateX(120%)";
+        setTimeout(() => {
+            toast.style.visibility = "hidden";
+        }, 400);
     }
 });

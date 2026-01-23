@@ -3,16 +3,33 @@
  * Student_Management/Studentmanagement.php
  */
 session_start();
+
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 require_once '../../Database/database_Connection.php'; 
+
+// Check if user is logged in
+if (!isset($_SESSION['role'])) {
+    header("Location: ../../Login_FacultyPage/loginFaculty.php");
+    exit();
+}
 
 $userRole = $_SESSION['role'] ?? 'Staff'; 
 $message = "";
 
-// 1. UPDATE LOGIC VIA STORED PROCEDURE
+// 1. UPDATE LOGIC VIA STORED PROCEDURE (WITH PASSWORD HASHING)
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_student'])) {
     try {
-        // EXEC sp_UpdateStudentInfo na may kumpletong parameters
-        $stmt = $conn->prepare("EXEC sp_UpdateStudentInfo ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
+        // --- PAGBABAGO: Hashing ng password bago i-save ---
+        $raw_password = $_POST['pass'];
+        $hashed_password = password_hash($raw_password, PASSWORD_BCRYPT);
+        // -------------------------------------------------
+
+        // EXEC sp_UpdateStudentInfo na may 14 parameters
+        $stmt = $conn->prepare("EXEC sp_UpdateStudentInfo ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
         $stmt->execute([
             $_POST['student_id'], 
             $_POST['fname'], 
@@ -26,37 +43,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_student'])) {
             $_POST['city'], 
             $_POST['zipcode'], 
             $_POST['status'],
-            $_POST['course_id']
+            $_POST['course_id'],
+            $hashed_password // Ipinapasa ang hashed password sa halip na plain text
         ]);
-        $message = "✅ Success: Student information has been updated.";
+        $message = "✅ Success: Student information and encrypted password have been updated.";
     } catch (PDOException $e) {
         $message = "❌ Error: Could not update record. " . $e->getMessage();
     }
 }
 
-// 2. DELETE LOGIC VIA STORED PROCEDURE (Admin Only)
-if (isset($_POST['confirm_delete']) && $userRole === 'Admin') {
-    $idToDelete = $_POST['student_id'];
-    try {
-        // Gumagamit ng SP para sa Delete para sa rubriks
-        $stmt = $conn->prepare("EXEC sp_DeleteStudent ?");
-        $stmt->execute([$idToDelete]);
-        $message = "✅ Success: Student $idToDelete has been removed.";
-    } catch (PDOException $e) { 
-        $message = "❌ Error: " . $e->getMessage(); 
+// 2. DELETE LOGIC VIA STORED PROCEDURE (Super Admin Only)
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
+    if ($userRole !== 'Super Admin') {
+        $message = "🚫 Error: Unauthorized action. Only Super Admin can delete.";
+    } else {
+        $idToDelete = $_POST['student_id'];
+        try {
+            $stmt = $conn->prepare("EXEC sp_DeleteStudent ?");
+            $stmt->execute([$idToDelete]);
+            $message = "🗑️ Success: Student record has been deleted.";
+        } catch (PDOException $e) { 
+            $message = "❌ Error: " . $e->getMessage(); 
+        }
     }
 }
 
-// 3. FETCH DATA VIA STORED PROCEDURE (Search & Display)
+// 3. FETCH DATA VIA STORED PROCEDURE
 $search = $_GET['search'] ?? null;
 $students = [];
 try {
-    // Tinatawag ang SP para sa pagkuha ng listahan (sp_GetStudentList)
     $stmt = $conn->prepare("EXEC sp_GetStudentList ?");
     $stmt->execute([$search]);
     $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Kumuha ng listahan ng kurso para sa dropdown menu sa Edit Modal
     $courseStmt = $conn->query("SELECT courseID, courseName FROM Course");
     $courses = $courseStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) { 
@@ -121,7 +140,10 @@ try {
                             <td><span class="badge-status <?php echo strtolower($row['status'] ?? 'pending'); ?>"><?php echo htmlspecialchars($row['status'] ?? 'Pending'); ?></span></td>
                             <td class="actions">
                                 <button class="btn-edit" onclick="openEditModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">Edit</button>
-                                <button class="btn-delete" onclick="confirmDelete('<?php echo htmlspecialchars($row['studentID']); ?>')">Delete</button>
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($row['studentID']); ?>">
+                                    <button type="submit" name="delete_student" class="btn-delete" onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -162,6 +184,11 @@ try {
                     <div class="field"><label>Date of Birth</label><input type="date" name="dob" id="edit_dob" required></div>
                     <div class="field"><label>Email</label><input type="email" name="email" id="edit_email" required></div>
                     <div class="field"><label>Phone Number</label><input type="text" name="phone" id="edit_phone"></div>
+
+                    <div class="field">
+                        <label>New Password (will be hashed)</label>
+                        <input type="password" name="pass" placeholder="••••••••" required>
+                    </div>
                     <div class="field"><label>Street</label><input type="text" name="street" id="edit_street"></div>
                     <div class="field"><label>City</label><input type="text" name="city" id="edit_city"></div>
                     <div class="field"><label>Zip Code</label><input type="text" name="zipcode" id="edit_zip"></div>
@@ -179,20 +206,6 @@ try {
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="closeModal('editModal')">Cancel</button>
                     <button type="submit" name="update_student" class="btn-primary">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="deleteModal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-header delete-head">⚠️ Confirm Deletion</div>
-            <div class="modal-body">Are you sure you want to delete student <b id="del_name"></b>?</div>
-            <form method="POST">
-                <input type="hidden" name="student_id" id="del_id">
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeModal('deleteModal')">Cancel</button>
-                    <button type="submit" name="confirm_delete" class="btn-danger">Confirm Delete</button>
                 </div>
             </form>
         </div>

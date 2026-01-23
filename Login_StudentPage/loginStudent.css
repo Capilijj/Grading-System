@@ -120,27 +120,6 @@ body {
     color: #888;
 }
 
-/* ================================
-   FORGOT PASSWORD LINK
-   ================================ */
-.forgot-links {
-    width: 100%;
-    max-width: 300px;
-    margin-top: 6px;
-    margin-bottom: 8px;
-    text-align: right;
-}
-
-.forgot-password-link {
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: underline;
-    font-size: 0.92rem;
-}
-
-/* Hover effect for forgot password section */
-.forgot-links:hover { 
-    color: #0515fa; 
-}
 
 /* ================================
    SIGN IN BUTTON

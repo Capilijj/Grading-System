@@ -1,23 +1,49 @@
 <?php
+session_start();
+
+// 1. Database Connection
+require_once '../../Database/database_Connection.php'; 
+
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Check if student is logged in
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Student') {
+    header("Location: ../../Login_StudentPage/loginStudent.php");
+    exit();
+}
+
+// Kunin ang Student ID mula sa Session
+$studentID = $_SESSION['studentID'] ?? $_SESSION['user_id'] ?? '';
+
 /**
  * AUTOMATED ACADEMIC YEAR & SEMESTER LOGIC
- * Kusang nagbabago base sa buwan at taon ng server.
  */
-$currentMonth = (int)date('n'); 
+$currentMonth = (int)date('n');
 $currentYear = (int)date('Y');
 
 if ($currentMonth >= 6 && $currentMonth <= 11) {
-    // June to November typically 1st Sem
     $semester = "First Semester";
     $academicYear = $currentYear . "-" . ($currentYear + 1);
 } else {
-    // December to May typically 2nd Sem
     $semester = "Second Semester";
-    if ($currentMonth >= 1 && $currentMonth <= 5) {
-        $academicYear = ($currentYear - 1) . "-" . $currentYear;
-    } else {
-        $academicYear = $currentYear . "-" . ($currentYear + 1);
-    }
+    $academicYear = ($currentMonth >= 1 && $currentMonth <= 5) ? ($currentYear - 1) . "-" . $currentYear : $currentYear . "-" . ($currentYear + 1);
+}
+
+/* ---------------------------------------------------------
+    FETCH SCHEDULE FROM DATABASE USING SP
+   --------------------------------------------------------- */
+$schedules = [];
+try {
+    // Tinatawag ang SP na inayos natin sa SQL Server
+    $stmt = $conn->prepare("EXEC sp_GetStudentSchedule ?");
+    $stmt->execute([$studentID]);
+    $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+} catch (Exception $e) {
+    $error_msg = $e->getMessage();
 }
 ?>
 
@@ -68,52 +94,25 @@ if ($currentMonth >= 6 && $currentMonth <= 11) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                             /* ---------------------------------------------------------
-                                Ken! Dito mo na isaksak yung sa database:
-                                ai lang to HAHA.
-                                1. Connect mo muna yung database natin.
-                                2. Hatakin mo yung schedule nung student gamit yung ID 
-                                   o Session Number nila (SELECT * FROM schedule WHERE student_id = ...).
-                                3. I-loop mo lang dito gamit 'while' or 'foreach' para 
-                                   kusa nang lumabas yung mga rows sa table.
-                                  
-                                Sample na galawan:
-                                  while($row = $result->fetch_assoc()) {
-                                      echo "<tr>
-                                              <td>" . $row['sub_code'] . "</td>
-                                              <td>" . $row['description'] . "</td>
-                                              <td>" . $row['units'] . "</td>
-                                              <td>" . $row['day'] . "</td>
-                                              <td>" . $row['time'] . "</td>
-                                              <td>" . $row['room'] . "</td>
-                                              <td>" . $row['instructor'] . "</td>
-                                            </tr>";
-                                  }
-                                  
-                                Note: Pakitanggal nalang yung static <tr> sa baba pag okay na loop mo.
-                                Ikaw na bahala sa query, Ken! 
-                                --------------------------------------------------------- */
-                            ?>
-                            
-                            <tr>
-                                <td>IT101</td>
-                                <td>Introduction to Computing</td>
-                                <td>3</td>
-                                <td>Mon/Wed</td>
-                                <td>08:00 AM - 10:00 AM</td>
-                                <td>CL-1</td>
-                                <td>Prof. Dela Cruz</td>
-                            </tr>
-                            <tr>
-                                <td>CS202</td>
-                                <td>Data Structures and Algorithms</td>
-                                <td>3</td>
-                                <td>Tue/Thu</td>
-                                <td>01:00 PM - 03:00 PM</td>
-                                <td>CL-2</td>
-                                <td>Prof. Santos</td>
-                            </tr>
+                            <?php if (!empty($schedules)): ?>
+                                <?php foreach ($schedules as $row): ?>
+                                    <tr>
+                                        <td><strong><?php echo htmlspecialchars($row['subjectCode']); ?></strong></td>
+                                        <td><?php echo htmlspecialchars($row['subjectName']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['units']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['dayOfWeek']); ?></td>
+                                        <td><?php echo $row['StartTime'] . ' - ' . $row['EndTime']; ?></td>
+                                        <td><?php echo htmlspecialchars($row['room']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['instructorName']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="7" style="text-align:center; padding: 20px; color: #888;">
+                                        No schedule found for Student ID: <?php echo htmlspecialchars($studentID); ?>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

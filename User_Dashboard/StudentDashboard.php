@@ -1,10 +1,64 @@
+<?php
+session_start();
+
+/** * 1. DATABASE CONNECTION & AUTH CHECK
+ */
+// Ginagamit ang __DIR__ para masiguro ang path mula sa current directory patungo sa Database folder
+require_once __DIR__ . '/../Database/database_Connection.php'; 
+
+// Prevent caching para laging updated ang data na nakikita ng student
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Check kung ang user ay naka-log in at kung siya ay isang Student
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Student') {
+    header("Location: ../Login_StudentPage/loginStudent.php");
+    exit();
+}
+
+$studentID = $_SESSION['studentID'] ?? '';
+
+/**
+ * 2. FETCH STUDENT DETAILS (NAME & ID)
+ */
+try {
+    $stmt_details = $conn->prepare("{call sp_GetStudentDetails(?)}");
+    $stmt_details->execute([$studentID]);
+    $student = $stmt_details->fetch(PDO::FETCH_ASSOC);
+    $stmt_details->closeCursor();
+
+    if ($student) {
+        $mInitial = !empty($student['mName']) ? substr($student['mName'], 0, 1) . "." : "";
+        $fullName = strtoupper($student['lName'] . ", " . $student['fName'] . " " . $mInitial);
+    } else {
+        $fullName = "STUDENT NOT FOUND";
+    }
+} catch (Exception $e) {
+    $fullName = "ERROR LOADING NAME";
+}
+
+/**
+ * 3. FETCH DASHBOARD STATS (GPA, UNITS, INC)
+ * Tandaan: Ang logic para sa "8 subjects minimum bago lumabas ang GPA" ay naka-set sa Stored Procedure.
+ */
+try {
+    $stmt_stats = $conn->prepare("{call sp_GetStudentDashboardStats(?)}");
+    $stmt_stats->execute([$studentID]);
+    $stats = $stmt_stats->fetch(PDO::FETCH_ASSOC) ?: ['GPA' => '0.00', 'TotalUnits' => '0', 'INC_Count' => '0'];
+    $stmt_stats->closeCursor();
+} catch (Exception $e) {
+    $stats = ['GPA' => '0.00', 'TotalUnits' => '0', 'INC_Count' => '0'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard - ISCP</title>
-    
+
     <link rel="stylesheet" href="Header/header.css">
     <link rel="stylesheet" href="StudentDashboard.css">
     <link rel="stylesheet" href="Footer/FooterDashboard.css">
@@ -25,44 +79,35 @@
                 </div>
             </div>
         </section>
-        <?php
-        /* ---------------------------------------------------------
-                    Ken, dito mo ilalagay yung PHP code para kunin yung data mula sa database.
-                    Ai lang to
-                    1. Hatakin mo yung GPA, Total Units, at INC count sa database.
-                    2. I-display mo sa loob ng mga card-value na div sa baba.
-                    
-                    Sample na galawan para sa Balance:
-                    if($row['balance'] == 0) {
-                        echo "Free-Educ";
-                    } else {
-                        echo "₱" . number_format($row['balance'], 2);
-                    }
 
-                    Note: Pakipalitan nalang yung mga static numbers sa baba pag may variables ka na.
-                    Kaya mo yan, Ken! Isaksak na ang SQL logic! AAHHAHHAH isaksak mo na raw AHAHHA 
-                    Ai mo nalang din kapag nalito ka HAHAHA yang baba yung papalitan mo ng dynamic data galing sa database.
-                    yang may name ko
-                    --------------------------------------------------------- */
-                ?>
         <div class="white-content-container floating-top">
             <div class="user-info-bar">
-                CAPILI, JUSTINE JAMES RAZO (2023-00075-CM-0)
+                Welcome, <strong><?php echo htmlspecialchars($fullName); ?></strong> (<?php echo htmlspecialchars($studentID); ?>)
             </div>
 
             <section class="stats-grid">
                 <div class="card orange-card">
                     <p>Current GPA</p>
-                    <div class="card-value">1.67</div>
+                    <div class="card-value">
+                        <?php echo htmlspecialchars($stats['GPA']); ?>
+                    </div>
+                    <?php if ($stats['GPA'] == '0.00'): ?>
+                        <small style="font-size: 0.65rem; display: block; margin-top: 5px; color: #fff;">
+                            *Available after 8 subjects are graded
+                        </small>
+                    <?php endif; ?>
                 </div>
+
                 <div class="card teal-card">
                     <p>Total Units Enrolled</p>
-                    <div class="card-value">8</div>
+                    <div class="card-value"><?php echo htmlspecialchars($stats['TotalUnits']); ?></div>
                 </div>
+
                 <div class="card teal-card">
                     <p>Incomplete Grades</p>
-                    <div class="card-value">0</div>
+                    <div class="card-value"><?php echo htmlspecialchars($stats['INC_Count']); ?></div>
                 </div>
+
                 <div class="card teal-card">
                     <p>Account Balance</p>
                     <div class="card-value small-text">Free-Educ</div>
@@ -102,40 +147,24 @@
                                 <td>1 subject</td><td>Verbal Warning</td><td>Requires mandatory consultation with the Program Coordinator.</td>
                             </tr>
                             <tr>
-                                <td>2 subjects</td><td>Written Warning (Reduced load by 3 units)</td><td>Scholarship remains, but the student must pass all subjects in the current semester.</td>
+                                <td>2 subjects</td><td>Written Warning</td><td>Scholarship remains, but must pass all subjects in the current semester.</td>
                             </tr>
                             <tr>
-                                <td>3 subjects</td><td>Probation (Reduced load by 6 units)</td><td>Scholarship will be forfeited for the following semester.</td>
+                                <td>3 subjects</td><td>Probation</td><td>Scholarship will be forfeited for the following semester.</td>
                             </tr>
                             <tr>
                                 <td>4 subjects or more</td><td>Dismissal</td><td>Deemed Dropped from the University.</td>
                             </tr>
                         </tbody>
                     </table>
-                    <p class="note">Note: A student who acquires a "Written Warning" for two (2) non-consecutive semesters, the Free Education Scholarship Grant will be automatically forfeited.</p>
+                    <p class="note">Note: A student who acquires a "Written Warning" for dalawang (2) non-consecutive semesters, the Free Education Scholarship Grant will be automatically forfeited.</p>
                 </div>
 
                 <div class="rule-block">
                     <h4>3. MAXIMUM RESIDENCY AND YEARS OF STAY</h4>
-                    <p>If a student stays beyond the allowed number of years covered by the Free Education Law for their course, they shall pay the tuition and miscellaneous fees for the remaining allowable years of stay, provided this is still within the maximum residency period of ISCP.</p>
-                </div>
-
-                <div class="rule-block">
-                    <h4>4. FILING A LEAVE OF ABSENCE (LOA)</h4>
-                    <p>The procedure for filing an LOA shall follow the existing ISCP Student Handbook. With permission from the University, the LOA will enable the student to still enjoy the scholarship upon their return, and the LOA period will not be counted against the maximum covered years.</p>
-                </div>
-
-                <div class="rule-block">
-                    <h4>5. ADHERENCE TO EXISTING POLICIES</h4>
-                    <p>All existing policies of ISCP (Admission, Retention, and Graduation rules) shall be upheld and used to complement the implementation of the Free Education Act.</p>
-                </div>
-
-                <div class="rule-block">
-                    <h4>6. POLICY PRIORITY</h4>
-                    <p>For provisions inconsistent with the ISCP Student Handbook, the stipulations in these ISCP Academic Compliance Guidelines (ACG) shall prevail.</p>
+                    <p>If a student stays beyond the allowed number of years covered by the Free Education Law for their course, they shall pay the tuition and miscellaneous fees for the remaining allowable years of stay.</p>
                 </div>
             </div>
-
         </section>
     </main>
 

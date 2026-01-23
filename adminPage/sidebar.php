@@ -39,7 +39,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </nav>
 
     <div class="sidebar-footer">
-        <a href="../../Login_FacultyPage/loginFaculty.php" class="logout-btn">
+        <a href="../../logout.php" class="logout-btn">
             <span class="icon">📤</span> Logout
         </a>
     </div>

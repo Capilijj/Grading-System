@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dropdown = document.getElementById('facultyDropdown');
 
     // Hamburger Menu Toggle
-    if(menuToggle) {
+    if(menuToggle && navMenu) {
         menuToggle.addEventListener('click', function() {
             this.classList.toggle('is-active');
             navMenu.classList.toggle('active');
@@ -13,23 +13,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Profile Dropdown Toggle
-    if(profileBtn) {
+    if(profileBtn && dropdown) {
         profileBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             dropdown.classList.toggle('show');
         });
     }
 
-    // Isara ang menu o dropdown kapag nag-click sa labas
+    // Isara ang dropdown kapag nag-click sa labas
     window.addEventListener('click', function(event) {
-        if (!event.target.closest('.main-header')) {
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('is-active');
+        if (dropdown && dropdown.classList.contains('show')) {
+            if (!event.target.closest('.user-profile')) {
+                dropdown.classList.remove('show');
             }
         }
-        if (!event.target.closest('.user-profile')) {
-            dropdown.classList.remove('show');
+        
+        if (navMenu && navMenu.classList.contains('active')) {
+            if (!event.target.closest('.main-header')) {
+                navMenu.classList.remove('active');
+                if(menuToggle) menuToggle.classList.remove('is-active');
+            }
         }
     });
 });

@@ -47,7 +47,7 @@ if (strpos($current_dir, '/User_Dashboard') === 0 && $current_dir !== '/User_Das
                         <a href="../../User_Dashboard/ProfilePage/profile.php">My Profile</a>
                         <a href="../../User_Dashboard/ProfilePage/changepass.php">Change Pass</a>
                         <hr style="border: 0; border-top: 1px solid #eee; margin: 0;">
-                        <a href="../../Login_StudentPage/loginStudent.php" class="logout-btn">Log out</a>
+                        <a href="../../logout.php" class="logout-btn">Log out</a>
                     </div>
                 </div>
             </li>

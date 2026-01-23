@@ -1,13 +1,48 @@
 <?php
-/**
- * changepass.php
- * UI for Changing Password.
- * * --- INSTRUCTION PARA KAY KEN ---
- * 1. Pre, i-validate mo muna kung 'old_pass' ay tama sa DB.
- * 2. Siguraduhin na 'new_pass' at 'confirm_pass' ay MATCH bago i-save.
- */
+session_start();
+require_once __DIR__ . '/../../Database/database_Connection.php';
 
-$student_info = "CAPILI, JUSTINE JAMES RAZO (2023-00075-CM-0)";
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Check if student is logged in
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Student') {
+    header("Location: ../../Login_StudentPage/loginStudent.php");
+    exit();
+}
+
+$studentID = $_SESSION['studentID'] ?? '';
+$success_msg = "";
+$error_msg = "";
+
+// --- PASSWORD UPDATE LOGIC ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_pass'])) {
+    $new_pass = $_POST['new_pass'];
+    $confirm_pass = $_POST['confirm_pass'];
+
+    if ($new_pass === $confirm_pass) {
+        try {
+            // Tinatawag ang Stored Procedure
+            $stmt = $conn->prepare("{call sp_UpdateStudentPassword(?, ?)}");
+            $stmt->execute([$studentID, $new_pass]);
+            $success_msg = "Password updated successfully!";
+        } catch (Exception $e) {
+            $error_msg = "Error: " . $e->getMessage();
+        }
+    } else {
+        $error_msg = "Passwords do not match!";
+    }
+}
+
+// Fetch name for display
+try {
+    $stmt_name = $conn->prepare("SELECT fName, lName FROM dbo.Student WHERE studentID = ?");
+    $stmt_name->execute([$studentID]);
+    $user = $stmt_name->fetch(PDO::FETCH_ASSOC);
+    $fullName = strtoupper(($user['lName'] ?? '') . ", " . ($user['fName'] ?? ''));
+} catch (Exception $e) { $fullName = "STUDENT"; }
 ?>
 
 <!DOCTYPE html>
@@ -27,20 +62,16 @@ $student_info = "CAPILI, JUSTINE JAMES RAZO (2023-00075-CM-0)";
 
     <main class="changepass-container">
         <div class="changepass-card">
-            
             <div class="student-label">
-                <?php echo $student_info; ?>
+                <?php echo htmlspecialchars($fullName); ?> (<?php echo htmlspecialchars($studentID); ?>)
             </div>
 
             <hr class="divider">
 
-            <form action="#" method="POST" class="pass-form">
-                
-                <div class="input-wrapper">
-                    <input type="password" name="old_pass" placeholder="Old Password" required>
-                    <span class="icon">🔑</span>
-                </div>
+            <?php if($success_msg) echo "<p style='color:green; font-size:0.8rem;'>$success_msg</p>"; ?>
+            <?php if($error_msg) echo "<p style='color:red; font-size:0.8rem;'>$error_msg</p>"; ?>
 
+            <form action="" method="POST" class="pass-form">
                 <div class="input-wrapper">
                     <input type="password" name="new_pass" placeholder="New Password" required>
                     <span class="icon">🔑</span>
@@ -54,9 +85,8 @@ $student_info = "CAPILI, JUSTINE JAMES RAZO (2023-00075-CM-0)";
                 <hr class="divider">
 
                 <div class="form-footer">
-                    <button type="submit" class="btn-change-pass">Change Password</button>
+                    <button type="submit" name="change_pass" class="btn-change-pass">Update Password</button>
                 </div>
-
             </form>
         </div>
     </main>

@@ -1,6 +1,7 @@
 /* ================================
-   Faculty Login Screen Stylesheet
+   Faculty & Admin Login Stylesheet
    ================================ */
+
 body { 
     font-family: Arial, sans-serif;
     margin: 0; 
@@ -13,7 +14,7 @@ body {
 }
 
 /* ================================
-   MAIN CONTAINER & LAYOUT
+   MAIN CONTAINER (Split Screen)
    ================================ */
 .container {
     display: flex;
@@ -27,11 +28,11 @@ body {
 }
 
 /* ================================
-   RIGHT SECTION: LOGIN FORM 
+   RIGHT SECTION: FACULTY THEME
    ================================ */
-.form-section {
+.form-section.faculty-theme {
     flex: 1; 
-    background-color: #043b68; /* Dark blue */
+    background-color: #043b68; /* ISCP Dark Blue */
     color: white;
     padding: 40px;
     display: flex;
@@ -44,11 +45,13 @@ body {
     position: relative;
 }
 
-/* LOGO STYLING */
+/* ================================
+   LOGO AND HEADER
+   ================================ */
 .header-content {
     width: 100%;
     max-width: 300px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .logo-circle {
@@ -62,13 +65,13 @@ body {
     align-items: center;
 }
 
-/* Faculty logo border color */
-.logo-circle img {
+/* Faculty logo border color (ISCP Red) */
+.faculty-logo-border img {
     width: 100px; 
     height: 100px; 
     border-radius: 50%;  
     object-fit: cover; 
-    border: 3px solid #ff3131; /* Red border for Faculty */
+    border: 3px solid #cc0000; 
     display: block;
 }
 
@@ -80,18 +83,37 @@ body {
 
 .instruction-text {
     font-size: 1.1em;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     opacity: 0.8;
 }
 
-/* LOGIN FORM STYLING */
+/* ================================
+   TEXT VALIDATION BOX (NEW)
+   ================================ */
+.error-text-msg {
+    color: #ffffff;
+    background: rgba(204, 0, 0, 0.4); /* Transparent Red */
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: 1px solid #cc0000;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ================================
+   LOGIN FORM STYLING
+   ================================ */
 .login-form {
     width: 100%;
     max-width: 300px;
 }
 
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .login-form input[type="text"],
@@ -105,12 +127,12 @@ body {
     outline: none;
 }
 
-/* Sign In Button (Faculty Style) */
-.sign-in-button {
+/* Sign In Button (Faculty Red) */
+.faculty-btn {
     display: block;
     width: 100%;
     padding: 15px;
-    margin-top: 5px; 
+    margin-top: 10px; 
     border: none;
     border-radius: 5px;
     text-align: center;
@@ -118,17 +140,18 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-    background-color: #ff3131; 
+    background-color: #cc0000; 
     color: white;
-    border: 1px solid #CC3333;
+    border: 1px solid #990000;
 }
 
-.sign-in-button:hover {
-    /* Using the faculty button hover color from login_splash.css */
-    background-color: #660505;
+.faculty-btn:hover {
+    background-color: #a30000;
 }
 
-/* FOOTER LINKS STYLING */
+/* ================================
+   FOOTER & BACK LINKS
+   ================================ */
 .Back-links {
     margin-top: 40px;
 }
@@ -152,9 +175,13 @@ body {
     margin-bottom: 8px;
     text-align: right;
 }
+
 .forgot-password-link {
     color: rgba(255, 255, 255, 0.9);
     text-decoration: underline;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
 }
-.forgot-links:hover { color: #0515fa; }
+
+.forgot-password-link:hover {
+    color: #ffda00; /* Yellow hover for visibility */
+}

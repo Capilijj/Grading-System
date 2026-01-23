@@ -148,6 +148,11 @@ body {
     font-size: 0.95rem;
 }
 
+/* Center the Account Status column */
+.modern-table td:nth-child(4) {
+    text-align: center;
+}
+
 /* Role Badges */
 .role-badge {
     padding: 4px 12px;

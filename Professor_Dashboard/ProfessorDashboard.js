@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.getElementById('nav-menu');
     const profileBtn = document.getElementById('facultyProfileBtn');
     const dropdown = document.getElementById('facultyDropdown');
+    const downloadBtn = document.getElementById('downloadSchedBtn');
 
     // Hamburger Menu Toggle
     if(menuToggle) {
@@ -18,6 +19,21 @@ document.addEventListener('DOMContentLoaded', function() {
         profileBtn.addEventListener('click', function(e) {
             e.stopPropagation(); // Pinipigilan ang pag-close agad
             dropdown.classList.toggle('show');
+        });
+    }
+
+    // PDF Download Functionality
+    if(downloadBtn) {
+        downloadBtn.addEventListener('click', function() {
+            const element = document.getElementById('schedule-content');
+            const opt = {
+                margin: 1,
+                filename: 'Professor_Schedule.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
         });
     }
 

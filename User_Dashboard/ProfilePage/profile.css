@@ -2,7 +2,7 @@
 body {
     background-color: #0c225e; 
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -10,131 +10,153 @@ body {
 
 .profile-page-container {
     flex: 1;
-    padding: 40px 20px;
+    padding: 50px 0;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 }
 
 .profile-card {
-    width: 100%;
-    max-width: 1000px;
+    width: 90%;
+    max-width: 900px; /* Mas compact na width dahil wala nang left sidebar */
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    margin: 0 auto;
 }
 
 .profile-header-banner {
     background-color: #f8f9fa;
     padding: 20px;
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #043b68;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid #043b68;
     text-align: center;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
-.profile-layout {
-    display: flex;
+.profile-content {
     padding: 40px;
-    gap: 40px;
 }
 
-.profile-left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-right: 1px solid #eee;
-    padding-right: 20px;
+.profile-summary {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.avatar-container {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 5px solid #ff3b30; /* Red Accent */
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.profile-summary h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #0c225e;
+    font-weight: 900;
 }
 
-.avatar-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.btn-upload {
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 8px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.85rem;
+.id-badge {
+    display: inline-block;
+    background: #e67e22;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
     font-weight: bold;
-    transition: 0.3s;
+    font-size: 0.9rem;
+    margin-top: 10px;
 }
 
-.btn-upload:hover { background-color: #d0d0d0; }
+.section-divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 30px 0;
+}
 
-.profile-right { flex: 2.5; }
-
+/* Alignment Grid */
 .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px 20px;
+    grid-template-columns: repeat(2, 1fr); /* Dalawang pantay na column */
+    gap: 20px 30px;
 }
 
-.form-group { display: flex; flex-direction: column; gap: 5px; }
-.form-group.full-width { grid-column: span 2; }
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
 
 .form-group label {
-    font-size: 0.8rem;
-    color: #666;
-    font-weight: 600;
+    font-size: 0.75rem;
+    color: #555;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .readonly-input {
-    padding: 12px;
-    background-color: #f1f3f5;
-    border: 1px solid #e9ecef;
+    padding: 12px 15px;
+    background-color: #f1f4f8; /* Light blue-gray for readonly */
+    border: 1px solid #dce1e7;
     border-radius: 6px;
-    color: #777;
-    cursor: not-allowed;
+    color: #333;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .editable-input {
-    padding: 12px;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
+    padding: 12px 15px;
+    background-color: #fff;
+    border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 0.95rem;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .editable-input:focus {
     border-color: #043b68;
     outline: none;
-    background-color: #fff;
+    box-shadow: 0 0 8px rgba(4, 59, 104, 0.2);
+}
+
+textarea.editable-input {
+    resize: vertical;
+}
+
+.form-actions {
+    margin-top: 40px;
+    text-align: center;
 }
 
 .btn-save {
-    margin-top: 20px;
     background-color: #043b68;
     color: white;
     border: none;
-    padding: 12px 25px;
+    padding: 15px 40px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 1rem;
     width: 100%;
+    transition: 0.3s;
 }
 
-@media (max-width: 768px) {
-    .profile-layout { flex-direction: column; }
-    .form-grid { grid-template-columns: 1fr; }
-    .form-group.full-width { grid-column: span 1; }
+.btn-save:hover {
+    background-color: #0c225e;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+    .profile-content {
+        padding: 20px;
+    }
 }
