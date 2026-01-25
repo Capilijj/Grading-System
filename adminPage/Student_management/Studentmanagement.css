@@ -20,10 +20,9 @@ body {
     color: var(--text-dark);
 }
 
-/* 1. AYOS SA MAIN CONTENT - Siguraduhin na ang flex container ay tama */
 .main-content {
     padding: 2rem;
-    margin-left: 260px; /* Base sa sidebar width */
+    margin-left: 260px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -66,7 +65,7 @@ body {
     font-weight: 600;
 }
 
-/* Alert Box for Success/Error Messages */
+/* Alert Box */
 .alert-box {
     margin-top: 15px;
     padding: 12px;
@@ -78,21 +77,20 @@ body {
     font-weight: 600;
 }
 
-/* 2. TABLE CONTAINER - Ito ang hahawak sa overflow */
+/* Table Container */
 .table-container-wide {
     width: 100%;
-    overflow-x: auto; /* Pinapayagan ang horizontal scroll sa loob */
+    overflow-x: auto;
     padding-bottom: 1rem;
 }
 
-/* 3. GLASS CARD FIX - Inalis ang width limitation */
 .glass-card {
     background: var(--white);
     border-radius: 15px;
     padding: 1.5rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    width: fit-content; /* Pinapahaba ang card base sa luwang ng table */
-    min-width: 100%;    /* Pero hindi liliit sa 100% ng view */
+    width: fit-content;
+    min-width: 100%;
     box-sizing: border-box;
 }
 
@@ -101,7 +99,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.85rem;
-    white-space: nowrap; /* Pinipigilan ang pag-wrap ng text para hindi maging vertical ang table */
+    white-space: nowrap;
 }
 
 .full-info-table th {
@@ -122,13 +120,6 @@ body {
 
 .full-info-table tr:hover {
     background: #f9fbff;
-}
-
-/* Truncate long addresses if needed */
-.addr-cell {
-    max-width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 /* Status Badges */
@@ -161,7 +152,7 @@ body {
 .modal-box {
     background: white;
     border-radius: 15px;
-    width: 800px; /* Malapad para sa grid layout */
+    width: 800px;
     max-height: 90vh;
     display: flex;
     flex-direction: column;
@@ -171,6 +162,7 @@ body {
 }
 
 .edit-box { width: 700px; }
+.grade-sheet-modal { width: 95%; max-width: 1200px; }
 
 @keyframes modalPop {
     from { opacity: 0; transform: translateY(-20px); }
@@ -183,6 +175,28 @@ body {
     color: white;
     font-weight: 700;
     font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    opacity: 0.8;
 }
 
 .modal-body {
@@ -224,27 +238,75 @@ body {
     gap: 10px;
 }
 
-.btn-primary { background: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-.btn-secondary { background: #e2e8f0; color: #475569; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+.btn-primary { 
+    background: var(--primary-blue); 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 6px; 
+    font-weight: 600; 
+    cursor: pointer; 
+}
+
+.btn-secondary { 
+    background: #e2e8f0; 
+    color: #475569; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 6px; 
+    font-weight: 600; 
+    cursor: pointer; 
+}
 
 /* Action Buttons */
-.btn-edit, .btn-delete {
-    padding: 6px 14px;
+.actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.btn-edit, .btn-delete, .btn-grade {
+    height: 32px;
+    padding: 0 12px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 0.8rem;
-    transition: 0.2s;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 }
 
-.btn-edit { background: var(--secondary-blue); color: white; }
-.btn-edit:hover { background: var(--primary-blue); color: white; }
+.btn-edit { 
+    background: var(--secondary-blue); 
+    color: var(--white); 
+}
+.btn-edit:hover { 
+    background: var(--primary-blue); 
+}
 
-.btn-delete { background: var(--dropped); color: white; }
-.btn-delete:hover { background: #a93226; color: white; }
+.btn-grade { 
+    background: var(--regular);
+    color: var(--white); 
+}
+.btn-grade:hover { 
+    background: #219150; 
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+}
 
-/* Code element styling for IDs */
+.btn-delete { 
+    background: var(--dropped); 
+    color: var(--white); 
+}
+.btn-delete:hover { 
+    background: #a93226; 
+}
+
+/* Code element styling */
 code {
     background: #f1f5f9;
     color: var(--secondary-blue);
@@ -252,4 +314,112 @@ code {
     border-radius: 4px;
     font-family: 'Courier New', monospace;
     font-weight: 600;
+}
+
+/* Academic Year Info Box */
+.ay-info-box {
+    background: #f0f4f8;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid var(--primary-blue);
+}
+
+.ay-info-box small {
+    color: #666;
+    display: block;
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+}
+
+.ay-info-box strong {
+    color: var(--primary-blue);
+    font-size: 1rem;
+}
+
+/* Grade Sheet Table */
+.grade-sheet-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 10px;
+}
+
+.grade-sheet-table thead {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.grade-sheet-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.grade-sheet-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.grade-sheet-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.grade-sheet-table tbody tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.grade-sheet-table tbody tr:nth-child(even):hover {
+    background: #f1f3f5;
+}
+
+/* Status Badges in Grade Sheet */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.status-passed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-failed {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-withdrawn {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-incomplete {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* Edit Grade Button in Table */
+.btn-edit-grade {
+    background: var(--secondary-blue);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-edit-grade:hover {
+    background: var(--primary-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(12, 34, 94, 0.3);
 }

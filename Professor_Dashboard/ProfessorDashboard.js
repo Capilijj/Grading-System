@@ -1,57 +1,59 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.getElementById('mobile-menu');
-    const navMenu = document.getElementById('nav-menu');
-    const profileBtn = document.getElementById('facultyProfileBtn');
-    const dropdown = document.getElementById('facultyDropdown');
-    const downloadBtn = document.getElementById('downloadSchedBtn');
+    const roleSelect = document.getElementById('roleSelect');
+    const courseSelect = document.querySelector('select[name="course_id"]');
+    const sectionSelect = document.querySelector('select[name="section_id"]');
 
-    // Hamburger Menu Toggle
-    if(menuToggle) {
-        menuToggle.addEventListener('click', function(e) {
-            e.stopPropagation(); // Pinipigilan ang pag-close agad
-            this.classList.toggle('is-active');
-            navMenu.classList.toggle('active');
-        });
-    }
+    // 1. ROLE TOGGLE LOGIC (Yung code mo kanina)
+    if (roleSelect) {
+        roleSelect.addEventListener('change', function() {
+            const role = this.value;
+            const studentDiv = document.getElementById('studentSpecific');
+            const studentYear = document.getElementById('studentYear');
+            const profDiv = document.getElementById('profSpecific');
+            const profDept = document.getElementById('profDept');
+            const idLabel = document.getElementById('idLabel');
 
-    // Profile Dropdown Toggle
-    if(profileBtn) {
-        profileBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Pinipigilan ang pag-close agad
-            dropdown.classList.toggle('show');
-        });
-    }
+            studentDiv.style.display = 'none';
+            studentYear.style.display = 'none';
+            profDiv.style.display = 'none';
+            profDept.style.display = 'none';
 
-    // PDF Download Functionality
-    if(downloadBtn) {
-        downloadBtn.addEventListener('click', function() {
-            const element = document.getElementById('schedule-content');
-            const opt = {
-                margin: 1,
-                filename: 'Professor_Schedule.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(element).save();
-        });
-    }
-
-    // Isara ang menu o dropdown kapag nag-click sa labas
-    window.addEventListener('click', function(event) {
-        // Isara ang Mobile Menu kung naka-open at nag-click sa labas
-        if (navMenu && navMenu.classList.contains('active')) {
-            if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('is-active');
+            if (role === 'Student') {
+                studentDiv.style.display = 'block';
+                studentYear.style.display = 'block';
+                idLabel.innerText = 'STUDENT ID NUMBER';
+            } else if (role === 'Professor') {
+                profDiv.style.display = 'block';
+                profDept.style.display = 'block';
+                idLabel.innerText = 'FACULTY ID NUMBER';
+            } else {
+                idLabel.innerText = 'ID NUMBER';
             }
-        }
-        
-        // Isara ang Dropdown kung naka-show at nag-click sa labas
-        if (dropdown && dropdown.classList.contains('show')) {
-            if (!profileBtn.contains(event.target)) {
-                dropdown.classList.remove('show');
-            }
-        }
-    });
+        });
+    }
+
+    // 2. SECTION FILTERING LOGIC (Para iwas Foreign Key Error)
+    if (courseSelect && sectionSelect) {
+        courseSelect.addEventListener('change', function() {
+            const selectedCourseID = this.value; // Kunwari: "1"
+            const options = sectionSelect.querySelectorAll('option');
+
+            options.forEach(option => {
+                if (option.value === "") {
+                    option.style.display = 'block'; // Ipakita ang "Select Section"
+                    return;
+                }
+
+                // I-check kung ang text ay may "Course Link: X"
+                if (option.text.includes(`Course Link: ${selectedCourseID}`)) {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+
+            // I-reset ang pili sa Section para hindi maiwan yung maling ID
+            sectionSelect.value = "";
+        });
+    }
 });

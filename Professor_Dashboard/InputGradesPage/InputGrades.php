@@ -14,15 +14,29 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Professor') {
 $professorID = $_SESSION['professorID'] ?? $_SESSION['user_id'];
 $current_page = 'InputGrades.php';
 
+$subjectID = $_GET['subjectID'] ?? 1; 
+
 $students = [];
 try {
-    // Tinitiyak na ang SP ay nagbabalik ng DISTINCT records
-    $stmt = $conn->prepare("{call sp_GetInputGradesList(?)}");
-    $stmt->execute([$professorID]);
+    $stmt = $conn->prepare("{call sp_GetInputGradesList(?, ?)}");
+    $stmt->execute([$professorID, $subjectID]);
     $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
 } catch (Exception $e) {
     $students = []; 
+}
+
+// Function para sa initial remarks display
+function getRemarks($grade) {
+    $grade = strtoupper(trim($grade));
+    if ($grade === "") return "";
+    if ($grade === "INC") return "INCOMPLETE";
+    if ($grade === "W") return "WITHDRAWN";
+    
+    $num = floatval($grade);
+    if ($num >= 1.0 && $num <= 3.0) return "PASSED";
+    if ($num > 3.0 && $num <= 5.0) return "FAILED";
+    return "INVALID";
 }
 ?>
 
@@ -37,12 +51,11 @@ try {
     <link rel="stylesheet" href="../../User_Dashboard/Footer/FooterDashboard.css">
     <link rel="stylesheet" href="InputGrades.css">
     <style>
-        /* Green PDF Button */
-        #downloadPdfBtn {
-            background-color: #27ae60 !important;
-            border-color: #219150 !important;
-            color: white !important;
-        }
+        .remarks-col { font-weight: bold; font-size: 0.9rem; }
+        .status-passed { color: #27ae60; }
+        .status-failed { color: #e74c3c; }
+        .status-inc { color: #e67e22; }
+        .status-w { color: #7f8c8d; }
     </style>
 </head>
 <body>
@@ -54,6 +67,7 @@ try {
                 <div class="title-section">
                     <h1>Input Student Grades</h1>
                     <p>Professor ID: <span class="subject-highlight"><?php echo htmlspecialchars($professorID); ?></span></p>
+                    <small style="color: #ccc;">Scale: 1.0 (Uno) to 5.0 (Failed) | INC | W</small>
                 </div>
                 <div class="action-section">
                     <input type="text" id="gradeSearch" placeholder="Search student name or ID...">
@@ -69,25 +83,37 @@ try {
                         <tr>
                             <th>Student ID</th>
                             <th>Full Name</th>
-                            <th class="text-center">Prelim</th>
-                            <th class="text-center">Midterm</th>
-                            <th class="text-center">Finals</th>
-                            <th class="text-center">Average</th>
-                            <th class="text-center actions-col">Action</th>
+                            <th class="text-center">Final Grade</th>
+                            <th class="text-center">Remarks</th> <th class="text-center actions-col">Action</th>
                         </tr>
                     </thead>
                     <tbody id="gradeTableBody">
                         <?php if (empty($students)): ?>
-                            <tr id="noResults"><td colspan="7" style="text-align:center; padding:30px;">No students assigned.</td></tr>
+                            <tr id="noResults"><td colspan="5" style="text-align:center; padding:30px;">No students assigned.</td></tr>
                         <?php else: ?>
-                            <?php foreach ($students as $student): ?>
-                            <tr data-student-id="<?php echo htmlspecialchars($student['id']); ?>">
+                            <?php foreach ($students as $student): 
+                                $currentGrade = $student['finalGrade'] ?? '';
+                                $remarkText = getRemarks($currentGrade);
+                                $remarkClass = "";
+                                if ($remarkText == "PASSED") $remarkClass = "status-passed";
+                                elseif ($remarkText == "FAILED") $remarkClass = "status-failed";
+                                elseif ($remarkText == "INCOMPLETE") $remarkClass = "status-inc";
+                                elseif ($remarkText == "WITHDRAWN") $remarkClass = "status-w";
+                            ?>
+                            <tr data-student-id="<?php echo htmlspecialchars($student['id']); ?>" 
+                                data-subject-id="<?php echo $subjectID; ?>">
                                 <td class="id-col"><strong><?php echo htmlspecialchars($student['id']); ?></strong></td>
                                 <td class="name-col"><?php echo htmlspecialchars($student['name']); ?></td>
-                                <td class="text-center"><input type="number" step="0.25" class="grade-input" value="<?php echo $student['prelim'] > 0 ? $student['prelim'] : ''; ?>"></td>
-                                <td class="text-center"><input type="number" step="0.25" class="grade-input" value="<?php echo $student['midterm'] > 0 ? $student['midterm'] : ''; ?>"></td>
-                                <td class="text-center"><input type="number" step="0.25" class="grade-input" value="<?php echo $student['finals'] > 0 ? $student['finals'] : ''; ?>"></td>
-                                <td class="text-center"><strong class="final-grade">--</strong></td>
+                                <td class="text-center">
+                                    <input type="text" 
+                                           class="grade-input" 
+                                           maxlength="5" 
+                                           placeholder="1.00"
+                                           value="<?php echo htmlspecialchars($currentGrade); ?>">
+                                </td>
+                                <td class="text-center remarks-col <?php echo $remarkClass; ?>">
+                                    <?php echo $remarkText; ?>
+                                </td>
                                 <td class="text-center actions-col">
                                     <button class="btn-row-save">Save</button>
                                 </td>
@@ -99,7 +125,9 @@ try {
             </div>
         </section>
     </main>
+
     <?php include '../../User_Dashboard/Footer/FooterDashboard.php'; ?>
     <script src="InputGrades.js"></script>
+    <script src="/Professor_Dashboard/Header/ProfessorHeader.js"></script>
 </body>
 </html>

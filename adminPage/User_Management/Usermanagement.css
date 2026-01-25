@@ -1,234 +1,284 @@
+/* USER MANAGEMENT STYLES - ISCP */
 :root {
     --primary-blue: #043b68;
     --dark-blue: #0c225e;
-    --orange-accent: #e67e22;
+    --orange-accent: #0c225e;
     --bg-light: #f4f7fa;
     --input-bg: #ebf2ff;
     --success-green: #2ecc71;
+    --warning-yellow: #f1c40f;
+    --danger-red: #e74c3c;
 }
 
-body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-light);
+body { 
+    margin: 0; 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg-light); 
 }
 
-.main-content {
-    margin-left: 280px;
-    padding: 30px 40px;
+.main-content { 
+    margin-left: 280px; 
+    padding: 30px 40px; 
 }
 
-/* --- Header UI --- */
-.top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 40px;
-}
-
-.header-left h1 {
-    color: var(--dark-blue);
-    margin: 0;
-    font-weight: 800;
-    font-size: 2rem;
+/* TOP HEADER STYLING */
+.header-left h1 { 
+    color: var(--dark-blue); 
+    font-weight: 800; 
+    margin: 0; 
 }
 
 .header-left p { 
-    color: #666; 
-    margin-top: 5px; 
+    margin: 4px 0; 
     font-size: 0.9rem; 
+    color: #555; 
 }
 
-/* Alert Box for Success/Error Messages */
+/* BADGES */
+.role-badge {
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.status-regular {
+    color: var(--success-green);
+    font-weight: 700;
+}
+
+/* REQUIRED FIELD INDICATOR */
+.required {
+    color: var(--danger-red);
+    font-weight: 900;
+    margin-left: 2px;
+}
+
+/* HELPER TEXT */
+.helper-text {
+    display: block;
+    font-size: 0.7rem;
+    color: #999;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+/* ALERT BOX STYLING */
 .alert-box {
-    margin-top: 15px;
-    padding: 12px;
+    margin: 20px 0;
+    padding: 15px 20px;
     background: white;
-    border-left: 5px solid var(--orange-accent);
+    border-left: 5px solid var(--success-green);
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    color: var(--dark-blue);
-    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    font-weight: 500;
+    line-height: 1.6;
 }
 
-/* --- Grid Layout --- */
-.admin-grid {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 30px;
+.alert-box.success {
+    border-left: 5px solid var(--success-green);
+    background: #d4edda;
+    color: #155724;
+}
+
+.alert-box.error {
+    border-left: 5px solid var(--danger-red);
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* FORM WRAPPER & CARD */
+.central-form-wrapper { 
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px;
 }
 
 .glass-card {
     background: white;
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid rgba(255,255,255,0.8);
-}
-
-/* --- Search & Table Header --- */
-.table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.search-wrapper {
-    display: flex;
-    gap: 12px;
-}
-
-.search-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-    background: var(--input-bg);
-    border-radius: 12px;
-    padding: 0 15px;
-    border: 1px solid transparent;
-    transition: 0.3s;
-}
-
-.search-box:focus-within {
-    border-color: var(--primary-blue);
-    background: white;
-    box-shadow: 0 0 0 4px rgba(4, 59, 104, 0.1);
-}
-
-.search-icon { 
-    font-size: 0.9rem; 
-    margin-right: 10px; 
-    opacity: 0.6; 
-}
-
-.search-box input {
-    border: none;
-    background: transparent;
-    padding: 12px 0;
-    width: 250px;
-    outline: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-}
-
-.btn-filter {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 10px 18px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-.btn-filter:hover { 
-    background: #f9f9f9; 
-}
-
-/* --- Table Styling --- */
-.modern-table {
     width: 100%;
-    border-collapse: collapse;
+    max-width: 850px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-.modern-table th {
-    text-align: left;
-    padding: 15px;
-    font-size: 0.75rem;
-    text-transform: uppercase;
+.form-section { 
+    margin-bottom: 25px; 
+    padding-bottom: 15px; 
+    border-bottom: 1px solid #eee; 
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section h4 { 
+    margin: 0 0 15px 0; 
+    color: var(--primary-blue); 
+    font-size: 0.75rem; 
+    text-transform: uppercase; 
     letter-spacing: 1px;
-    color: #999;
-    border-bottom: 2px solid #f4f7fa;
 }
 
-.modern-table td {
-    padding: 18px 15px;
-    border-bottom: 1px solid #f4f7fa;
-    font-size: 0.95rem;
+/* GRID SYSTEM */
+.form-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 15px; 
 }
 
-/* Center the Account Status column */
-.modern-table td:nth-child(4) {
-    text-align: center;
-}
-
-/* Role Badges */
-.role-badge {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.role-badge.student { background: #e3f2fd; color: #1976d2; }
-.role-badge.professor { background: #f1f8e9; color: #388e3c; }
-.role-badge.staff { background: #fff3e0; color: #f57c00; }
-.role-badge.admin { background: #f3e5f5; color: #7b1fa2; }
-
-/* Status Indicators */
-.status-indicator { 
-    font-weight: 700; 
-    font-size: 0.8rem; 
-}
-
-.status-indicator.active { color: var(--success-green); }
-.status-indicator.pending { color: var(--orange-accent); }
-
-/* --- Form Elements --- */
 .field { 
-    margin-bottom: 20px; 
+    margin-bottom: 15px; 
 }
 
 .field label { 
     display: block; 
     font-size: 0.7rem; 
     font-weight: 800; 
-    color: var(--primary-blue); 
-    margin-bottom: 8px; 
-    letter-spacing: 0.5px; 
+    color: #666; 
+    margin-bottom: 5px; 
+    text-transform: uppercase;
 }
 
+/* INPUTS & SELECTS */
 .field input, .field select {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    background: var(--input-bg);
-    border-radius: 10px;
+    width: 100%; 
+    padding: 12px; 
+    border: 2px solid #dce4ec; 
+    background: var(--input-bg); 
+    border-radius: 8px; 
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #333;
+    transition: all 0.3s ease;
 }
 
+.field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(4, 59, 104, 0.1);
+}
+
+/* VALIDATION STATES */
+.field input:invalid:not(:placeholder-shown),
+.field select:invalid {
+    border-color: var(--danger-red);
+    background: #fff5f5;
+}
+
+.field input:valid:not(:placeholder-shown) {
+    border-color: var(--success-green);
+}
+
+.field input[required]:focus,
+.field select[required]:focus {
+    border-left: 4px solid var(--primary-blue);
+}
+
+/* DISABLED STATE */
+.field input:disabled, .field select:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* PRIMARY BUTTON */
 .btn-primary {
-    width: 100%;
-    padding: 16px;
-    background: var(--dark-blue);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.3s;
+    width: 100%; 
+    padding: 18px; 
+    background: var(--orange-accent);
+    color: white; 
+    border: none; 
+    border-radius: 12px; 
+    font-weight: 800; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    text-transform: uppercase;
     letter-spacing: 1px;
+    margin-top: 10px;
+    font-size: 1rem;
 }
 
 .btn-primary:hover {
-    background: var(--orange-accent);
+    background: #065527;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
+    box-shadow: 0 5px 15px rgba(12, 34, 94, 0.4);
 }
 
-.btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    opacity: 0.7;
-    transition: 0.2s;
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(12, 34, 94, 0.3);
 }
 
-.btn-icon:hover { 
-    opacity: 1; 
-    transform: scale(1.1); 
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* HIDDEN SECTIONS (JS controlled) */
+#studentSpecific, #studentYear, #profSpecific, #profDept {
+    transition: all 0.3s ease;
+}
+
+/* LOADING INDICATOR */
+.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.loading::after {
+    content: "Processing...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.95);
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .glass-card {
+        padding: 20px;
+    }
+}
+
+/* FADE IN ANIMATION */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-box {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* FOCUS VISIBLE FOR ACCESSIBILITY */
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
 }

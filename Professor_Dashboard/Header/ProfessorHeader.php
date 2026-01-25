@@ -83,4 +83,4 @@ if ($profID && isset($conn)) {
     </nav>
 </header>
 
-<script src="/Professor_Dashboard/Header/ProfessorHeader.js"></script>
+<script src="ProfessorHeader.js"></script>

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_update'])) {
 
     try {
         // CALL sp_UpdateStudentProfile(ID, Phone, Email, Street, City, Zip)
-        $sql_update = "{call sp_UpdateStudentProfile(?, ?, ?, ?, ?, ?)}";
+        $sql_update = "{sp_UpdateStudentProfile(?, ?, ?, ?, ?, ?)}";
         $stmt_upd = $conn->prepare($sql_update);
         $stmt_upd->execute([$studentID, $new_phone, $new_email, $new_street, $new_city, $new_zip]);
         

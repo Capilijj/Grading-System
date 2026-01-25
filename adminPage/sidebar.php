@@ -31,11 +31,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
            class="nav-item <?= ($current_page == 'academicyear.php') ? 'active' : '' ?>">
             <span class="icon">🎓</span> Academic Control
         </a>
-
-        <a href="../graderecords/graderecords.php" 
-           class="nav-item <?= ($current_page == 'graderecords.php') ? 'active' : '' ?>">
-            <span class="icon">📝</span> Grade Records
+       
+        <a href="../scheduling/manage_schedule.php" 
+            class="nav-item <?= ($current_page == 'manage_schedule.php') ? 'active' : '' ?>">
+                <span class="icon">📅</span> Class Scheduling
         </a>
+        
     </nav>
 
     <div class="sidebar-footer">

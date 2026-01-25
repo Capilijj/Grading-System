@@ -1,47 +1,95 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tableBody = document.getElementById('gradeTableBody');
-    const rows = tableBody.querySelectorAll('tr[data-student-id]');
+    const searchInput = document.getElementById('gradeSearch');
 
-    // 1. PUP WEIGHTED CALCULATION (Live Preview)
-    rows.forEach(row => {
-        const inputs = row.querySelectorAll('.grade-input');
-        const avgDisplay = row.querySelector('.final-grade');
+    // 1. FUNCTION: GET REMARKS LOGIC
+    // Ginagamit ito para sa "Live" update ng UI
+    function updateRowRemarks(inputElement) {
+        const row = inputElement.closest('tr');
+        const remarksCell = row.querySelector('.remarks-col');
+        if (!remarksCell) return;
 
-        function previewCalculate() {
-            const p = parseFloat(inputs[0].value) || 0; // Prelim
-            const m = parseFloat(inputs[1].value) || 0; // Midterm
-            const f = parseFloat(inputs[2].value) || 0; // Finals
-            
-            // PUP Formula: (P * 0.30) + (M * 0.30) + (F * 0.40)
-            const weightedAvg = (p * 0.30) + (m * 0.30) + (f * 0.40);
-            
-            avgDisplay.textContent = weightedAvg > 0 ? weightedAvg.toFixed(2) : "--";
-            
-            // PUP Passing logic (Halimbawa: 3.00 pababa ang pasa sa transmuted scale)
-            // Pero kung raw score ito (0-100), kadalasan 75 pataas ang pasa.
-            avgDisplay.style.color = weightedAvg > 75 ? "#27ae60" : "#cc0000";
+        const val = inputElement.value.toUpperCase().trim();
+        const numVal = parseFloat(val);
+
+        // Reset classes/styles
+        remarksCell.className = "text-center remarks-col"; 
+        remarksCell.style.fontWeight = "bold";
+
+        if (val === "") {
+            remarksCell.innerText = "";
+        } else if (val === "INC") {
+            remarksCell.innerText = "INCOMPLETE";
+            remarksCell.style.color = "#e67e22"; // Orange
+        } else if (val === "W") {
+            remarksCell.innerText = "WITHDRAWN";
+            remarksCell.style.color = "#7f8c8d"; // Gray
+        } else if (!isNaN(numVal)) {
+            if (numVal >= 1.0 && numVal <= 3.0) {
+                remarksCell.innerText = "PASSED";
+                remarksCell.style.color = "#27ae60"; // Green
+            } else if (numVal > 3.0 && numVal <= 5.0) {
+                remarksCell.innerText = "FAILED";
+                remarksCell.style.color = "#e74c3c"; // Red
+            } else {
+                remarksCell.innerText = "INVALID";
+                remarksCell.style.color = "#ff0000";
+            }
+        } else {
+            remarksCell.innerText = "INVALID";
+            remarksCell.style.color = "#ff0000";
         }
+    }
 
-        inputs.forEach(input => input.addEventListener('input', previewCalculate));
-        previewCalculate(); 
+    // 2. EVENT LISTENER: LIVE UPDATE HABANG NAGTATYPE
+    tableBody.addEventListener('input', function(e) {
+        if (e.target.classList.contains('grade-input')) {
+            updateRowRemarks(e.target);
+        }
     });
 
-    // 2. SAVE LOGIC (AJAX)
+    // 3. SEARCH FUNCTIONALITY
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase();
+            const rows = tableBody.querySelectorAll('tr:not(#noResults)');
+            
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+    }
+
+    // 4. SAVE LOGIC (AJAX)
     tableBody.addEventListener('click', function(e) {
         if (e.target && e.target.classList.contains('btn-row-save')) {
             const btn = e.target;
             const row = btn.closest('tr');
-            const inputs = row.querySelectorAll('.grade-input');
+            const input = row.querySelector('.grade-input');
             
+            const finalGradeValue = input.value.toUpperCase().trim();
+            const numVal = parseFloat(finalGradeValue);
+            const validSymbols = ['INC', 'W'];
+
+            // ENGLISH VALIDATION
+            if (!validSymbols.includes(finalGradeValue)) {
+                if (isNaN(numVal) || numVal < 1.0 || numVal > 5.0) {
+                    alert("Invalid Grade! Please enter a value between 1.0 and 5.0, or use INC/W.");
+                    input.focus();
+                    return;
+                }
+            }
+
+            // DATA PREPARATION
             const gradeData = [{
                 id: row.getAttribute('data-student-id'),
-                prelim: parseFloat(inputs[0].value) || 0,
-                midterm: parseFloat(inputs[1].value) || 0,
-                finals: parseFloat(inputs[2].value) || 0
+                gradeValue: finalGradeValue,
+                subjectID: row.getAttribute('data-subject-id') || 1
             }];
 
             btn.disabled = true;
-            btn.innerText = "...";
+            btn.innerText = "Saving...";
 
             fetch('save_grades_handler.php', {
                 method: 'POST',
@@ -53,7 +101,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(data.status === 'success') {
                     btn.style.background = "#2ecc71";
                     btn.innerText = "Saved!";
-                    setTimeout(() => location.reload(), 500);
+                    
+                    // Permanent color update for input after save
+                    if (numVal > 3.0 || finalGradeValue === '5.0') {
+                        input.style.color = "#e74c3c"; 
+                    } else if (numVal <= 3.0) {
+                        input.style.color = "#27ae60"; 
+                    }
+
+                    setTimeout(() => {
+                        btn.style.background = "#27ae60";
+                        btn.innerText = "Save";
+                        btn.disabled = false;
+                    }, 1500);
                 } else {
                     alert("Error: " + data.message);
                     btn.disabled = false;
@@ -61,7 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(err => {
-                alert("Network Error");
+                console.error("Fetch Error:", err);
+                alert("Network Error: Could not connect to the server.");
                 btn.disabled = false;
                 btn.innerText = "Save";
             });

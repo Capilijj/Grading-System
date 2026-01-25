@@ -5,8 +5,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Kapareho ng background color ng Home Dashboard */
-     background-color: #0c225e; 
+    background-color: #0c225e; 
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -17,7 +16,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-     background-color: #0c225e;  /* Sinisiguro na pati ang download area ay consistent ang kulay */
+    background-color: #0c225e; 
 }
 
 .grade-container {
@@ -71,7 +70,39 @@ body {
     margin-bottom: 15px;
 }
 
-/* 4. Grades Table Card (White Card) */
+.info-item label {
+    display: block;
+    font-size: 0.75rem;
+    color: #777;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.info-item span {
+    font-weight: 600;
+    color: #333;
+}
+
+/* 4. GPA Section Styling */
+.gpa-section {
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.gpa-section label {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.gpa-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #d35400; /* Contrast color para sa GPA */
+}
+
+/* 5. Grades Table Card (White Card) */
 .white-content-container {
     background-color: #ffffff;
     border-radius: 8px;
@@ -91,9 +122,9 @@ body {
     color: #333;
 }
 
-/* 5. Button Design (Inilipat mula sa PHP) */
+/* 6. Button Design */
 .btn-download {
-    background-color: #27ae60; /* Green color */
+    background-color: #27ae60; 
     color: white;
     border: none;
     padding: 8px 18px;
@@ -110,7 +141,7 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* 6. Table Structure */
+/* 7. Table Structure */
 .grade-table-wrapper {
     padding: 20px;
     overflow-x: auto;
@@ -124,19 +155,17 @@ body {
 .grade-table th {
     background-color: #ffffff;
     color: #333;
-    padding: 12px;
+    padding: 15px 12px;
     text-align: left;
     font-size: 0.85rem;
     font-weight: 700;
     border-bottom: 2px solid #dee2e6;
-    border-right: 1px solid #eee;
     text-transform: uppercase;
 }
 
 .grade-table td {
-    padding: 12px;
+    padding: 15px 12px;
     border-bottom: 1px solid #eee;
-    border-right: 1px solid #eee;
     font-size: 0.9rem;
     color: #444;
 }
@@ -145,7 +174,41 @@ body {
     background-color: #f9faff;
 }
 
-/* 7. Footer Logic */
+/* 8. Badge Status Colors - Base sa DB Remarks */
+.badge-status {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Matching PHP strtolower($row['gradeStatus']) */
+.passed { 
+    background-color: #e8f6ef;
+    color: #27ae60;
+    border: 1px solid #27ae60;
+}
+
+.incomplete { 
+    background-color: #fef5e7;
+    color: #e67e22;
+    border: 1px solid #e67e22;
+}
+
+.failed { 
+    background-color: #fdeaea;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+}
+
+.pending { 
+    background-color: #f4f6f7;
+    color: #7f8c8d;
+    border: 1px solid #7f8c8d;
+}
+
+/* 9. Footer Adjustment */
 footer, .dashboard-footer {
     width: 100%;
     background-color: #000;
@@ -153,14 +216,21 @@ footer, .dashboard-footer {
     margin-top: auto;
 }
 
-/* 8. Media Query para sa Responsive */
+/* 10. Media Queries */
 @media (max-width: 768px) {
     .info-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
     }
     
+    .grade-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
     .grade-table th, .grade-table td {
-        padding: 8px;
+        padding: 10px 8px;
         font-size: 0.8rem;
     }
 }

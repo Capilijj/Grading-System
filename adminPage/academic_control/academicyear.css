@@ -113,3 +113,32 @@ body {
 }
 
 .btn-icon:hover { background: #f8f9fa; border-color: var(--primary-blue); }
+
+/* Idagdag ito sa dulo ng iyong academicyear.css */
+
+.alert-box {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Bagong status for Open/Closed Enrollment */
+.data-table td b {
+    color: var(--dark-blue);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.status-active {
+    background: #e8f5e9 !important;
+    color: #27ae60 !important;
+    border: 1px solid #c8e6c9;
+}
+
+.status-archived {
+    background: #f5f5f5 !important;
+    color: #9e9e9e !important;
+}

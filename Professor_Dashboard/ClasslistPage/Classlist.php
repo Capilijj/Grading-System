@@ -1,6 +1,6 @@
 <?php
 /**
- * Classlist.php - Dynamic Database Version
+ * Classlist.php - Updated Dynamic Version
  */
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -28,11 +28,16 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Professor') {
 $professorID = $_SESSION['professorID'] ?? $_SESSION['user_id'];
 $current_page = 'Classlist.php';
 
+// Kuhanin ang subjectID mula sa URL (e.g., Classlist.php?subjectID=1)
+// Default ay NULL para ipakita ang lahat kung walang napili
+$subjectID = $_GET['subjectID'] ?? null; 
+
 // 3. Fetch Students from DB
 $students = [];
 try {
-    $stmt = $conn->prepare("{call sp_GetClasslist(?)}");
-    $stmt->execute([$professorID]);
+    // In-update para tumanggap ng dalawang parameter: ProfID at SubjectID
+    $stmt = $conn->prepare("{call sp_GetClasslist(?, ?)}");
+    $stmt->execute([$professorID, $subjectID]);
     $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
 } catch (Exception $e) {
@@ -61,6 +66,9 @@ try {
             <header class="content-header">
                 <div class="title-section">
                     <h1>Class List</h1>
+                    <?php if ($subjectID): ?>
+                        <p>Subject ID: <span class="subject-highlight"><?php echo htmlspecialchars($subjectID); ?></span></p>
+                    <?php endif; ?>
                     <p>Total Students: <span class="subject-highlight"><?php echo count($students); ?></span></p>
                 </div>
                 <div class="action-section">
@@ -77,7 +85,7 @@ try {
                         <tr>
                             <th>Student ID</th>
                             <th>Full Name</th>
-                            <th>Section</th>
+                            <th>Section/Course</th>
                             <th>Year Level</th>
                             <th>Status</th>
                         </tr>
@@ -86,7 +94,7 @@ try {
                         <?php if (empty($students)): ?>
                             <tr>
                                 <td colspan="5" style="text-align: center; padding: 40px; color: #666;">
-                                    No students found assigned to Professor ID: <strong><?php echo htmlspecialchars($professorID); ?></strong>
+                                    No students found for this subject.
                                 </td>
                             </tr>
                         <?php else: ?>
@@ -94,7 +102,7 @@ try {
                             <tr>
                                 <td class="id-col"><strong><?php echo htmlspecialchars($student['id']); ?></strong></td>
                                 <td class="name-col"><?php echo htmlspecialchars($student['name']); ?></td>
-                                <td><?php echo htmlspecialchars($student['course']); ?></td>
+                                <td><?php echo htmlspecialchars($student['course'] ?? $student['section'] ?? 'N/A'); ?></td>
                                 <td><?php echo htmlspecialchars($student['year']); ?></td>
                                 <td>
                                     <span class="tag-status <?php echo strtolower($student['status'] ?? 'regular'); ?>">

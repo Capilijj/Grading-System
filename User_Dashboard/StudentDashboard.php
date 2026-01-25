@@ -1,17 +1,12 @@
 <?php
 session_start();
 
-/** * 1. DATABASE CONNECTION & AUTH CHECK
- */
-// Ginagamit ang __DIR__ para masiguro ang path mula sa current directory patungo sa Database folder
 require_once __DIR__ . '/../Database/database_Connection.php'; 
 
-// Prevent caching para laging updated ang data na nakikita ng student
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-// Check kung ang user ay naka-log in at kung siya ay isang Student
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Student') {
     header("Location: ../Login_StudentPage/loginStudent.php");
     exit();
@@ -20,7 +15,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Student') {
 $studentID = $_SESSION['studentID'] ?? '';
 
 /**
- * 2. FETCH STUDENT DETAILS (NAME & ID)
+ * 2. FETCH STUDENT DETAILS (including studentType)
  */
 try {
     $stmt_details = $conn->prepare("{call sp_GetStudentDetails(?)}");
@@ -31,24 +26,26 @@ try {
     if ($student) {
         $mInitial = !empty($student['mName']) ? substr($student['mName'], 0, 1) . "." : "";
         $fullName = strtoupper($student['lName'] . ", " . $student['fName'] . " " . $mInitial);
+        $studentType = $student['studentType'] ?? 'Scholar'; // Get student type from DB
     } else {
         $fullName = "STUDENT NOT FOUND";
+        $studentType = "N/A";
     }
 } catch (Exception $e) {
     $fullName = "ERROR LOADING NAME";
+    $studentType = "N/A";
 }
 
 /**
- * 3. FETCH DASHBOARD STATS (GPA, UNITS, INC)
- * Tandaan: Ang logic para sa "8 subjects minimum bago lumabas ang GPA" ay naka-set sa Stored Procedure.
+ * 3. FETCH DASHBOARD STATS (GPA & INC) - Using updated SP
  */
 try {
     $stmt_stats = $conn->prepare("{call sp_GetStudentDashboardStats(?)}");
     $stmt_stats->execute([$studentID]);
-    $stats = $stmt_stats->fetch(PDO::FETCH_ASSOC) ?: ['GPA' => '0.00', 'TotalUnits' => '0', 'INC_Count' => '0'];
+    $stats = $stmt_stats->fetch(PDO::FETCH_ASSOC) ?: ['GPA' => '0.00', 'INC_Count' => '0'];
     $stmt_stats->closeCursor();
 } catch (Exception $e) {
-    $stats = ['GPA' => '0.00', 'TotalUnits' => '0', 'INC_Count' => '0'];
+    $stats = ['GPA' => '0.00', 'INC_Count' => '0'];
 }
 ?>
 
@@ -62,6 +59,12 @@ try {
     <link rel="stylesheet" href="Header/header.css">
     <link rel="stylesheet" href="StudentDashboard.css">
     <link rel="stylesheet" href="Footer/FooterDashboard.css">
+    <style>
+        .rule-section-title { color: #0c225e; border-bottom: 2px solid #e67e22; padding-bottom: 10px; margin-top: 40px; text-transform: uppercase; letter-spacing: 1px; }
+        .sub-rule { margin-left: 20px; border-left: 3px solid #eee; padding-left: 15px; margin-bottom: 20px; }
+        .important-note { background-color: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; margin: 20px 0; font-style: italic; }
+        .delinquency-table { margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    </style>
 </head>
 <body>
 
@@ -85,22 +88,13 @@ try {
                 Welcome, <strong><?php echo htmlspecialchars($fullName); ?></strong> (<?php echo htmlspecialchars($studentID); ?>)
             </div>
 
-            <section class="stats-grid">
+            <section class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="card orange-card">
                     <p>Current GPA</p>
-                    <div class="card-value">
-                        <?php echo htmlspecialchars($stats['GPA']); ?>
-                    </div>
+                    <div class="card-value"><?php echo htmlspecialchars($stats['GPA']); ?></div>
                     <?php if ($stats['GPA'] == '0.00'): ?>
-                        <small style="font-size: 0.65rem; display: block; margin-top: 5px; color: #fff;">
-                            *Available after 8 subjects are graded
-                        </small>
+                        <small style="font-size: 0.65rem; display: block; margin-top: 5px; color: #fff;">*Available after all subjects are graded</small>
                     <?php endif; ?>
-                </div>
-
-                <div class="card teal-card">
-                    <p>Total Units Enrolled</p>
-                    <div class="card-value"><?php echo htmlspecialchars($stats['TotalUnits']); ?></div>
                 </div>
 
                 <div class="card teal-card">
@@ -109,60 +103,75 @@ try {
                 </div>
 
                 <div class="card teal-card">
-                    <p>Account Balance</p>
-                    <div class="card-value small-text">Free-Educ</div>
+                    <p>Student Type</p>
+                    <div class="card-value small-text"><?php echo htmlspecialchars($studentType); ?></div>
                 </div>
             </section>
         </div>
 
         <section class="white-content-container">
             <div class="guidelines-header">
-                ISCP ACADEMIC COMPLIANCE GUIDELINES (ACG)
+                ISCP ACADEMIC COMPLIANCE GUIDELINES (ACG) - v.2026
             </div>
             
             <div class="guidelines-content">
-                <p class="intro-text">These are the guidelines for the ISCP (Institute of Scholars and Certified Professionals) governing the maintenance of eligibility and benefits under the Free Education Law (e.g., RA 10931).</p>
+                <p class="intro-text">The following guidelines govern the maintenance of academic standing and scholarship eligibility at the Institute of Scholars and Certified Professionals (ISCP) in accordance with the Free Higher Education Act.</p>
                 
-                <div class="rule-block">
-                    <h4>I. ELIGIBILITY AND QUALIFICATION</h4>
-                    <p>All students who have satisfied the admission requirements of ISCP and do not fall into the "ineligible" categories stated in the Free Higher Education (FHE) Act are entitled to avail of Free Education.</p>
+                <h3 class="rule-section-title">I. Eligibility and General Qualifications</h3>
+                <div class="sub-rule">
+                    <p><strong>1.1 Admission:</strong> All students who have officially satisfied the admission and enrollment requirements of ISCP are eligible for the Free Education program.</p>
+                    <p><strong>1.2 Duration:</strong> The benefit covers the prescribed period of the course (e.g., 4 years for BSCS) plus a one-year grace period if necessary.</p>
+                    <p><strong>1.3 Residency:</strong> Students must maintain continuous residency. Any Leave of Absence (LOA) must be formally approved by the Registrar.</p>
                 </div>
 
-                <div class="rule-block">
-                    <h4>2. SCHOLASTIC DELINQUENCY MATRIX</h4>
-                    <p class="sub-text">To continuously enjoy the Free Education benefits, a student must maintain a Good Scholastic Standing.</p>
-                    
-                    <p class="table-title">FOR STUDENTS WITH A LOAD OF 22 UNITS AND ABOVE IN THE PREVIOUS SEMESTER</p>
-                    
-                    <table class="delinquency-table">
-                        <thead>
-                            <tr>
-                                <th>Number of Subject Failed/ Withdrawn/ Dropped</th>
-                                <th>Action to be Taken</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1 subject</td><td>Verbal Warning</td><td>Requires mandatory consultation with the Program Coordinator.</td>
-                            </tr>
-                            <tr>
-                                <td>2 subjects</td><td>Written Warning</td><td>Scholarship remains, but must pass all subjects in the current semester.</td>
-                            </tr>
-                            <tr>
-                                <td>3 subjects</td><td>Probation</td><td>Scholarship will be forfeited for the following semester.</td>
-                            </tr>
-                            <tr>
-                                <td>4 subjects or more</td><td>Dismissal</td><td>Deemed Dropped from the University.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p class="note">Note: A student who acquires a "Written Warning" for dalawang (2) non-consecutive semesters, the Free Education Scholarship Grant will be automatically forfeited.</p>
+                <h3 class="rule-section-title">II. Scholastic Delinquency Matrix</h3>
+                <p class="sub-text">Academic standing is evaluated at the end of every semester. Failure to meet the minimum passing rate will result in the following actions:</p>
+                
+                <table class="delinquency-table">
+                    <thead>
+                        <tr>
+                            <th>Number of Subjects Failed</th>
+                            <th>Action to be Taken</th>
+                            <th>Impact on Scholarship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1 Subject</td>
+                            <td>Verbal Warning</td>
+                            <td>Retention with mandatory peer-tutoring session.</td>
+                        </tr>
+                        <tr>
+                            <td>2 Subjects</td>
+                            <td>Written Warning</td>
+                            <td>Academic probation; must pass 100% of next sem load.</td>
+                        </tr>
+                        <tr>
+                            <td>3 Subjects</td>
+                            <td>Final Probation</td>
+                            <td>Scholarship benefits suspended for one (1) semester.</td>
+                        </tr>
+                        <tr>
+                            <td>4+ Subjects</td>
+                            <td>Dismissal</td>
+                            <td>Permanent disqualification from the University.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="important-note">
+                    <strong>Note:</strong> A "Written Warning" issued for two (2) non-consecutive semesters will automatically trigger a Scholarship Forfeiture. Grades of "Incomplete" (INC) must be settled within one academic year.
                 </div>
 
-                <div class="rule-block">
-                    <h4>3. MAXIMUM RESIDENCY AND YEARS OF STAY</h4>
-                    <p>If a student stays beyond the allowed number of years covered by the Free Education Law for their course, they shall pay the tuition and miscellaneous fees for the remaining allowable years of stay.</p>
+                <h3 class="rule-section-title">III. Maximum Residency Policy</h3>
+                <div class="sub-rule">
+                    <p><strong>3.1 Extension:</strong> Students who fail to graduate within the prescribed timeframe plus the one-year grace period will be required to pay full tuition and miscellaneous fees for the succeeding semesters.</p>
+                    <p><strong>3.2 Shifting:</strong> Shifting to another course is allowed once. The years spent in the previous course will be deducted from the total years of eligibility in the new course.</p>
+                </div>
+
+                <h3 class="rule-section-title">IV. Conduct and Behavioral Standards</h3>
+                <div class="sub-rule">
+                    <p>Students must maintain a clean disciplinary record. Any major offense as defined in the Student Manual (e.g., Academic Dishonesty, Vandalism, Bullying) is grounds for immediate termination of scholarship and expulsion from the Institute.</p>
                 </div>
             </div>
         </section>

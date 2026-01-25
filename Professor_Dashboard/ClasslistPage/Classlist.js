@@ -4,26 +4,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const noResults = document.getElementById('noResults');
 
     if (searchInput && tableBody) {
-        const rows = tableBody.querySelectorAll('tr:not(#noResults)');
-
         searchInput.addEventListener('input', function() {
-            const query = searchInput.value.toLowerCase();
+            const query = searchInput.value.toLowerCase().trim();
+            // Kunin ang lahat ng tr maliban sa noResults at yung empty message row mula sa PHP
+            const rows = tableBody.querySelectorAll('tr:not(#noResults)');
             let hasMatch = false;
+            let visibleCount = 0;
 
             rows.forEach(row => {
-                const name = row.querySelector('.name-col').textContent.toLowerCase();
-                const id = row.querySelector('.id-col').textContent.toLowerCase();
+                // I-check kung ang row ay hindi yung "No students found" message na galing PHP
+                const nameCol = row.querySelector('.name-col');
+                const idCol = row.querySelector('.id-col');
 
-                if (name.includes(query) || id.includes(query)) {
-                    row.style.display = "";
-                    hasMatch = true;
-                } else {
-                    row.style.display = "none";
+                if (nameCol && idCol) {
+                    const name = nameCol.textContent.toLowerCase();
+                    const id = idCol.textContent.toLowerCase();
+
+                    if (name.includes(query) || id.includes(query)) {
+                        row.style.display = "";
+                        hasMatch = true;
+                        visibleCount++;
+                    } else {
+                        row.style.display = "none";
+                    }
                 }
             });
 
-            // Ipakita ang "No students found" row kung walang nahanap
-            noResults.style.display = hasMatch ? "none" : "";
+            // Ipakita ang "No results" row kung walang tumugma sa search
+            if (noResults) {
+                noResults.style.display = (query !== "" && !hasMatch) ? "" : "none";
+            }
         });
     }
 });
