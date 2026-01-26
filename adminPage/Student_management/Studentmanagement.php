@@ -1,6 +1,7 @@
 <?php
 /**
  * Student_Management/Studentmanagement.php 
+ * Fixed: Update arguments & Direct Path to GradeMasterlist
  */
 session_start();
 
@@ -30,7 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_student'])) {
     try {
         $hashed_password = !empty($_POST['pass']) ? password_hash($_POST['pass'], PASSWORD_BCRYPT) : null;
 
-        $stmt = $conn->prepare("EXEC sp_UpdateStudentInfo ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
+        // Siguraduhin na 15 ang ? dito para tumugma sa pinapadala mong data
+        $stmt = $conn->prepare("EXEC sp_UpdateStudentInfo ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
         $stmt->execute([
             $_POST['student_id'], 
             $_POST['fname'] ?: null, 
@@ -45,36 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_student'])) {
             $_POST['zipcode'] ?: null, 
             $_POST['status'] ?: null,
             $_POST['course_id'] ?: null,
-            $hashed_password 
+            $_POST['section_id'] ?: null, // Ito ang ika-14 argument
+            $hashed_password              // Ito ang ika-15 argument
         ]);
-        $message = "✅ Success: Student information updated.";
+        $message = "✅ Success: Student profile updated.";
     } catch (PDOException $e) {
         $message = "❌ Error: " . $e->getMessage();
     }
 }
 
-// --- 2. UPDATE INDIVIDUAL SUBJECT GRADE LOGIC ---
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_grade'])) {
-    try {
-        $stmt = $conn->prepare("EXEC sp_UpdateStudentGrade ?, ?, ?, ?, ?");
-        $stmt->execute([
-            $_POST['student_id_grade'],
-            $_POST['subject_id'],
-            $_POST['new_grade'],
-            $_POST['remarks'],
-            $current_ayID
-        ]);
-        $message = "✅ Success: Student grade updated for $displaySemYear.";
-    } catch (PDOException $e) {
-        $message = "❌ Error Updating Grade: " . $e->getMessage();
-    }
-}
-
-// --- 3. DELETE LOGIC ---
+// --- 2. DELETE LOGIC ---
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
-    if ($userRole !== 'Super Admin') {
-        $message = "🚫 Error: Unauthorized action.";
-    } else {
+    if ($userRole === 'Super Admin') {
         try {
             $stmt = $conn->prepare("EXEC sp_DeleteStudent ?");
             $stmt->execute([$_POST['student_id']]);
@@ -85,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
     }
 }
 
-// --- 4. FETCH DATA (STUDENT TABLE ONLY) ---
+// --- 3. FETCH DATA ---
 $search = $_GET['search'] ?? null;
 $students = [];
 try {
@@ -107,6 +91,9 @@ try {
 
     $courseStmt = $conn->query("SELECT courseID, courseName FROM Course");
     $courses = $courseStmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $sectionStmt = $conn->query("SELECT sectionID, sectionName FROM Section");
+    $sections = $sectionStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) { 
     $message = "Error: " . $e->getMessage(); 
 }
@@ -129,7 +116,7 @@ try {
             <div>
                 <h1>Student Management</h1>
                 <p>Logged in as: <b><?php echo htmlspecialchars($userRole); ?></b> 
-                   | Active: <b style="color:#2ecc71;"><?= htmlspecialchars($displaySemYear); ?></b></p>
+                    | Active: <b style="color:#2ecc71;"><?= htmlspecialchars($displaySemYear); ?></b></p>
             </div>
             <div class="search-bar">
                 <form method="GET">
@@ -164,12 +151,11 @@ try {
                             <td><span class="badge-status <?= strtolower($row['status'] ?? 'pending'); ?>"><?= htmlspecialchars($row['status'] ?? 'Pending'); ?></span></td>
                             <td class="actions">
                                 <button class="btn-edit" onclick='openEditModal(<?= json_encode($row); ?>)'>Profile</button>
-                                <button class="btn-grade" onclick='openGradeModal("<?= $row['studentID']; ?>", "<?= htmlspecialchars($row['fName']." ".$row['lName']); ?>", <?= $current_ayID ?>)'>Grades</button>
+                                
+                                <button class="btn-grade" onclick="window.location.href='GradeMasterlist.php?search=<?= urlencode($row['studentID']); ?>'">Grades</button>
+                                
                                 <?php if($userRole === 'Super Admin'): ?>
-                                <form method="POST" style="display:inline;">
-                                    <input type="hidden" name="student_id" value="<?= $row['studentID']; ?>">
-                                    <button type="submit" name="delete_student" class="btn-delete" onclick="return confirm('Permanent delete?')">Delete</button>
-                                </form>
+                                <button type="button" class="btn-delete" onclick="confirmDelete('<?= $row['studentID']; ?>')">Delete</button>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -180,10 +166,12 @@ try {
         </div>
     </main>
 
-    <!-- EDIT PROFILE MODAL -->
     <div id="editModal" class="modal-overlay">
         <div class="modal-box edit-box">
-            <div class="modal-header">Update Student Profile</div>
+            <div class="modal-header">
+                <span>Update Student Profile</span>
+                <button type="button" class="close-btn" onclick="closeModal('editModal')">×</button>
+            </div>
             <form method="POST">
                 <div class="modal-body grid-form">
                     <input type="hidden" name="student_id" id="edit_id">
@@ -195,6 +183,14 @@ try {
                         <select name="course_id" id="edit_course">
                             <?php foreach($courses as $c): ?>
                                 <option value="<?= $c['courseID'] ?>"><?= htmlspecialchars($c['courseName']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Section</label>
+                        <select name="section_id" id="edit_section">
+                            <?php foreach($sections as $sec): ?>
+                                <option value="<?= $sec['sectionID'] ?>"><?= htmlspecialchars($sec['sectionName']) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -224,61 +220,6 @@ try {
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="closeModal('editModal')">Cancel</button>
                     <button type="submit" name="update_student" class="btn-primary">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- GRADE SHEET MODAL -->
-    <div id="gradeModal" class="modal-overlay">
-        <div class="modal-box grade-sheet-modal">
-            <div class="modal-header">
-                <span id="modal_student_name">Student Grade Sheet</span>
-                <button type="button" class="close-btn" onclick="closeModal('gradeModal')">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="ay-info-box">
-                    <small>Active Academic Year:</small>
-                    <strong><?= htmlspecialchars($displaySemYear); ?></strong>
-                </div>
-                
-                <div id="grade_sheet_container">
-                    <p style="text-align:center; color:#999;">Loading grade sheet...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- INDIVIDUAL GRADE EDIT MODAL -->
-    <div id="editGradeModal" class="modal-overlay">
-        <div class="modal-box" style="max-width:450px;">
-            <div class="modal-header">Edit Subject Grade</div>
-            <form method="POST">
-                <div class="modal-body">
-                    <input type="hidden" name="student_id_grade" id="edit_grade_student_id">
-                    <input type="hidden" name="subject_id" id="edit_grade_subject_id">
-                    
-                    <p><strong>Subject:</strong> <span id="edit_grade_subject_name"></span></p>
-                    <p><strong>Student:</strong> <span id="edit_grade_student_name"></span></p>
-                    
-                    <div class="field">
-                        <label>Final Grade</label>
-                        <input type="text" name="new_grade" id="edit_grade_input" placeholder="e.g. 1.25">
-                    </div>
-                    <div class="field" style="margin-top:10px;">
-                        <label>Remarks</label>
-                        <select name="remarks" id="edit_remarks_input">
-                            <option value="P">P - Passed</option>
-                            <option value="F">F - Failed</option>
-                            <option value="W">W - Withdrawn</option>
-                            <option value="INC">INC - Incomplete</option>
-                            <option value="ENROLLED">ENROLLED</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeModal('editGradeModal')">Cancel</button>
-                    <button type="submit" name="submit_grade" class="btn-primary">Save Grade</button>
                 </div>
             </form>
         </div>

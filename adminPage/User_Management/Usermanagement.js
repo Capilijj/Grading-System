@@ -7,6 +7,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const idLabel = document.getElementById('idLabel');
     const form = document.getElementById('registrationForm');
     
+    // Personal Info Sections
+    const dobField = document.querySelector('input[name="dob"]');
+    const sexField = document.querySelector('select[name="sex"]');
+    const phoneField = document.querySelector('input[name="phone"]');
+    const streetField = document.querySelector('input[name="street"]');
+    const cityField = document.querySelector('input[name="city"]');
+    const zipField = document.querySelector('input[name="zip"]');
+    const mNameField = document.querySelector('input[name="mName"]');
+    
+    // Get parent containers
+    const dobFieldParent = dobField?.closest('.field');
+    const sexFieldParent = sexField?.closest('.field');
+    const phoneFieldParent = phoneField?.closest('.field');
+    const streetFieldParent = streetField?.closest('.field');
+    const cityFieldParent = cityField?.closest('.field');
+    const zipFieldParent = zipField?.closest('.field');
+    const mNameFieldParent = mNameField?.closest('.field');
+    
     // Filtering Elements
     const courseSelect = document.getElementById('courseSelect');
     const sectionSelect = document.getElementById('sectionSelect');
@@ -20,37 +38,58 @@ document.addEventListener('DOMContentLoaded', function() {
         profDiv.style.display = 'none';
         academicSection.style.display = 'block';
         
+        // Show all personal fields by default
+        if (dobFieldParent) dobFieldParent.style.display = 'block';
+        if (sexFieldParent) sexFieldParent.style.display = 'block';
+        if (phoneFieldParent) phoneFieldParent.style.display = 'block';
+        if (streetFieldParent) streetFieldParent.style.display = 'block';
+        if (cityFieldParent) cityFieldParent.style.display = 'block';
+        if (zipFieldParent) zipFieldParent.style.display = 'block';
+        if (mNameFieldParent) mNameFieldParent.style.display = 'block';
+        
         statusSelect.innerHTML = '';
         
         // Remove required attributes from hidden fields
         if (courseSelect) courseSelect.removeAttribute('required');
         if (sectionSelect) sectionSelect.removeAttribute('required');
         if (deptInput) deptInput.removeAttribute('required');
+        if (dobField) dobField.removeAttribute('required');
+        if (sexField) sexField.removeAttribute('required');
 
         if (role === 'Student') {
             idLabel.innerText = 'STUDENT ID NUMBER';
             studentDiv.style.display = 'block';
-            statusSelect.innerHTML = '<option value="Regular">Regular</option><option value="Irregular">Irregular</option><option value="Pending">Pending</option><option value="Dropped">Dropped</option>';
+            statusSelect.innerHTML = '<option value="Regular">Regular</option><option value="Irregular">Irregular</option>';
             
             // Add required for student-specific fields
             if (courseSelect) courseSelect.setAttribute('required', 'required');
             if (sectionSelect) sectionSelect.setAttribute('required', 'required');
+            if (dobField) dobField.setAttribute('required', 'required');
+            if (sexField) sexField.setAttribute('required', 'required');
         } 
         else if (role === 'Professor') {
             idLabel.innerText = 'FACULTY ID NUMBER';
             profDiv.style.display = 'block';
             statusSelect.innerHTML = '<option value="Active (Full-time)">Active (Full-time)</option><option value="Active (Part-time)">Active (Part-time)</option><option value="Inactive">Inactive</option><option value="On-Leave">On-Leave</option>';
             
-            // Add required for professor department only
+            // Add required for professor fields
             if (deptInput) deptInput.setAttribute('required', 'required');
-            
-            // Section is NOT required for professors anymore
-            if (sectionSelect) sectionSelect.removeAttribute('required');
+            if (dobField) dobField.setAttribute('required', 'required');
+            if (sexField) sexField.setAttribute('required', 'required');
         } 
         else if (role === 'Staff') {
             idLabel.innerText = 'STAFF USERNAME';
             academicSection.style.display = 'none';
             statusSelect.innerHTML = '<option value="Active">Active</option>';
+            
+            // HIDE personal detail fields for Staff
+            if (dobFieldParent) dobFieldParent.style.display = 'none';
+            if (sexFieldParent) sexFieldParent.style.display = 'none';
+            if (phoneFieldParent) phoneFieldParent.style.display = 'none';
+            if (streetFieldParent) streetFieldParent.style.display = 'none';
+            if (cityFieldParent) cityFieldParent.style.display = 'none';
+            if (zipFieldParent) zipFieldParent.style.display = 'none';
+            if (mNameFieldParent) mNameFieldParent.style.display = 'none';
         }
     };
 

@@ -1,0 +1,690 @@
+[2026-01-26 07:35:13] === NEW SAVE REQUEST ===
+[2026-01-26 07:35:13] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":4}]
+[2026-01-26 07:35:13] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 4
+        )
+
+)
+
+[2026-01-26 07:35:13] Session Data: Array
+(
+    [professorID] => 2026-0003-ISCP
+    [user_id] => 2026-0003-ISCP
+    [role] => Professor
+    [name] => Cain Bonifacio
+    [fullName] => Cain Bonifacio
+    [email] => 
+    [login_time] => 1769409234
+)
+
+[2026-01-26 07:35:13] Resolved Professor ID: 2026-0003-ISCP
+[2026-01-26 07:35:13] Professor verified: 2026-0003-ISCP
+[2026-01-26 07:35:13] Transaction started
+[2026-01-26 07:35:13] SP prepared
+[2026-01-26 07:35:13] Processing Row 0: Student=2026-0005-CM, Grade=1, Subject=4, Prof=2026-0003-ISCP
+[2026-01-26 07:35:13] Executing SP with: [2026-0005-CM, 2026-0003-ISCP, 4, 1]
+[2026-01-26 07:35:13] SUCCESS Row 0: Grade saved
+[2026-01-26 07:35:13] Verification: Array
+(
+    [gradeID] => 60
+    [studentID] => 2026-0005-CM
+    [professorID] => 2026-0003-ISCP
+    [subjectID] => 4
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:35:13.853
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:35:13] Transaction committed. Saved count: 1
+[2026-01-26 07:35:13] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0003-ISCP"}
+[2026-01-26 07:35:13] === REQUEST COMPLETE ===
+
+[2026-01-26 07:35:16] === NEW SAVE REQUEST ===
+[2026-01-26 07:35:16] Raw Input: [{"id":"2026-0002-CM","gradeValue":"1","subjectID":4}]
+[2026-01-26 07:35:16] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0002-CM
+            [gradeValue] => 1
+            [subjectID] => 4
+        )
+
+)
+
+[2026-01-26 07:35:16] Session Data: Array
+(
+    [professorID] => 2026-0003-ISCP
+    [user_id] => 2026-0003-ISCP
+    [role] => Professor
+    [name] => Cain Bonifacio
+    [fullName] => Cain Bonifacio
+    [email] => 
+    [login_time] => 1769409234
+)
+
+[2026-01-26 07:35:16] Resolved Professor ID: 2026-0003-ISCP
+[2026-01-26 07:35:16] Professor verified: 2026-0003-ISCP
+[2026-01-26 07:35:16] Transaction started
+[2026-01-26 07:35:16] SP prepared
+[2026-01-26 07:35:16] Processing Row 0: Student=2026-0002-CM, Grade=1, Subject=4, Prof=2026-0003-ISCP
+[2026-01-26 07:35:16] Executing SP with: [2026-0002-CM, 2026-0003-ISCP, 4, 1]
+[2026-01-26 07:35:16] SUCCESS Row 0: Grade saved
+[2026-01-26 07:35:16] Verification: Array
+(
+    [gradeID] => 61
+    [studentID] => 2026-0002-CM
+    [professorID] => 2026-0003-ISCP
+    [subjectID] => 4
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:35:16.310
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:35:16] Transaction committed. Saved count: 1
+[2026-01-26 07:35:16] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0003-ISCP"}
+[2026-01-26 07:35:16] === REQUEST COMPLETE ===
+
+[2026-01-26 07:36:22] === NEW SAVE REQUEST ===
+[2026-01-26 07:36:22] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":4}]
+[2026-01-26 07:36:22] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 4
+        )
+
+)
+
+[2026-01-26 07:36:22] Session Data: Array
+(
+    [professorID] => 2026-0003-ISCP
+    [user_id] => 2026-0003-ISCP
+    [role] => Professor
+    [name] => Cain Bonifacio
+    [fullName] => Cain Bonifacio
+    [email] => 
+    [login_time] => 1769409234
+)
+
+[2026-01-26 07:36:22] Resolved Professor ID: 2026-0003-ISCP
+[2026-01-26 07:36:22] Professor verified: 2026-0003-ISCP
+[2026-01-26 07:36:22] Transaction started
+[2026-01-26 07:36:22] SP prepared
+[2026-01-26 07:36:22] Processing Row 0: Student=2026-0005-CM, Grade=1, Subject=4, Prof=2026-0003-ISCP
+[2026-01-26 07:36:22] Executing SP with: [2026-0005-CM, 2026-0003-ISCP, 4, 1]
+[2026-01-26 07:36:22] SUCCESS Row 0: Grade saved
+[2026-01-26 07:36:22] Verification: Array
+(
+    [gradeID] => 60
+    [studentID] => 2026-0005-CM
+    [professorID] => 2026-0003-ISCP
+    [subjectID] => 4
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:36:22.030
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:36:22] Transaction committed. Saved count: 1
+[2026-01-26 07:36:22] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0003-ISCP"}
+[2026-01-26 07:36:22] === REQUEST COMPLETE ===
+
+[2026-01-26 07:43:58] === NEW SAVE REQUEST ===
+[2026-01-26 07:43:58] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":6}]
+[2026-01-26 07:43:58] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 6
+        )
+
+)
+
+[2026-01-26 07:43:58] Session Data: Array
+(
+    [professorID] => 2026-0005-ISCP
+    [user_id] => 2026-0005-ISCP
+    [role] => Professor
+    [name] => J.Panians Paniol
+    [fullName] => J.Panians Paniol
+    [email] => 
+    [login_time] => 1769409834
+)
+
+[2026-01-26 07:43:58] Resolved Professor ID: 2026-0005-ISCP
+[2026-01-26 07:43:58] Professor verified: 2026-0005-ISCP
+[2026-01-26 07:43:58] Transaction started
+[2026-01-26 07:43:58] SP prepared
+[2026-01-26 07:43:58] Processing Row 0: Student=2026-0005-CM, Grade=1, Subject=6, Prof=2026-0005-ISCP
+[2026-01-26 07:43:58] Executing SP with: [2026-0005-CM, 2026-0005-ISCP, 6, 1]
+[2026-01-26 07:43:58] SUCCESS Row 0: Grade saved
+[2026-01-26 07:43:58] Verification: Array
+(
+    [gradeID] => 67
+    [studentID] => 2026-0005-CM
+    [professorID] => 2026-0005-ISCP
+    [subjectID] => 6
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:43:58.080
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:43:58] Transaction committed. Saved count: 1
+[2026-01-26 07:43:58] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0005-ISCP"}
+[2026-01-26 07:43:58] === REQUEST COMPLETE ===
+
+[2026-01-26 07:45:49] === NEW SAVE REQUEST ===
+[2026-01-26 07:45:49] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 07:45:49] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 07:45:49] Session Data: Array
+(
+    [professorID] => 2026-0004-ISCP
+    [user_id] => 2026-0004-ISCP
+    [role] => Professor
+    [name] => Jose RIzal
+    [fullName] => Jose RIzal
+    [email] => 
+    [login_time] => 1769409938
+)
+
+[2026-01-26 07:45:49] Resolved Professor ID: 2026-0004-ISCP
+[2026-01-26 07:45:49] Professor verified: 2026-0004-ISCP
+[2026-01-26 07:45:49] Transaction started
+[2026-01-26 07:45:49] SP prepared
+[2026-01-26 07:45:49] Processing Row 0: Student=2026-0005-CM, Grade=1, Subject=2, Prof=2026-0004-ISCP
+[2026-01-26 07:45:49] Executing SP with: [2026-0005-CM, 2026-0004-ISCP, 2, 1]
+[2026-01-26 07:45:49] SUCCESS Row 0: Grade saved
+[2026-01-26 07:45:50] Verification: Array
+(
+    [gradeID] => 22
+    [studentID] => 2026-0005-CM
+    [professorID] => 2026-0004-ISCP
+    [subjectID] => 2
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:45:49.990
+    [remarks] => Enrolled
+    [ayID] => 1
+)
+
+[2026-01-26 07:45:50] Transaction committed. Saved count: 1
+[2026-01-26 07:45:50] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0004-ISCP"}
+[2026-01-26 07:45:50] === REQUEST COMPLETE ===
+
+[2026-01-26 07:50:15] === NEW SAVE REQUEST ===
+[2026-01-26 07:50:15] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 07:50:15] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 07:50:15] Session Data: Array
+(
+    [professorID] => 2026-0004-ISCP
+    [user_id] => 2026-0004-ISCP
+    [role] => Professor
+    [name] => Jose RIzal
+    [fullName] => Jose RIzal
+    [email] => 
+    [login_time] => 1769410207
+)
+
+[2026-01-26 07:50:15] Resolved Professor ID: 2026-0004-ISCP
+[2026-01-26 07:50:15] Professor verified: 2026-0004-ISCP
+[2026-01-26 07:50:15] Transaction started
+[2026-01-26 07:50:15] SP prepared
+[2026-01-26 07:50:15] Processing Row 0: Student=2026-0005-CM, Grade=1, Subject=2, Prof=2026-0004-ISCP
+[2026-01-26 07:50:15] Executing SP with: [2026-0005-CM, 2026-0004-ISCP, 2, 1]
+[2026-01-26 07:50:15] SUCCESS Row 0: Grade saved
+[2026-01-26 07:50:15] Verification: Array
+(
+    [gradeID] => 1
+    [studentID] => 2026-0005-CM
+    [professorID] => 2026-0004-ISCP
+    [subjectID] => 2
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:50:15.383
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:50:15] Transaction committed. Saved count: 1
+[2026-01-26 07:50:15] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0004-ISCP"}
+[2026-01-26 07:50:15] === REQUEST COMPLETE ===
+
+[2026-01-26 07:50:16] === NEW SAVE REQUEST ===
+[2026-01-26 07:50:16] Raw Input: [{"id":"2026-0002-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 07:50:16] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0002-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 07:50:16] Session Data: Array
+(
+    [professorID] => 2026-0004-ISCP
+    [user_id] => 2026-0004-ISCP
+    [role] => Professor
+    [name] => Jose RIzal
+    [fullName] => Jose RIzal
+    [email] => 
+    [login_time] => 1769410207
+)
+
+[2026-01-26 07:50:16] Resolved Professor ID: 2026-0004-ISCP
+[2026-01-26 07:50:16] Professor verified: 2026-0004-ISCP
+[2026-01-26 07:50:16] Transaction started
+[2026-01-26 07:50:16] SP prepared
+[2026-01-26 07:50:16] Processing Row 0: Student=2026-0002-CM, Grade=1, Subject=2, Prof=2026-0004-ISCP
+[2026-01-26 07:50:16] Executing SP with: [2026-0002-CM, 2026-0004-ISCP, 2, 1]
+[2026-01-26 07:50:16] SUCCESS Row 0: Grade saved
+[2026-01-26 07:50:16] Verification: Array
+(
+    [gradeID] => 2
+    [studentID] => 2026-0002-CM
+    [professorID] => 2026-0004-ISCP
+    [subjectID] => 2
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:50:16.883
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:50:16] Transaction committed. Saved count: 1
+[2026-01-26 07:50:16] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0004-ISCP"}
+[2026-01-26 07:50:16] === REQUEST COMPLETE ===
+
+[2026-01-26 07:50:18] === NEW SAVE REQUEST ===
+[2026-01-26 07:50:18] Raw Input: [{"id":"2026-0001-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 07:50:18] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0001-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 07:50:18] Session Data: Array
+(
+    [professorID] => 2026-0004-ISCP
+    [user_id] => 2026-0004-ISCP
+    [role] => Professor
+    [name] => Jose RIzal
+    [fullName] => Jose RIzal
+    [email] => 
+    [login_time] => 1769410207
+)
+
+[2026-01-26 07:50:18] Resolved Professor ID: 2026-0004-ISCP
+[2026-01-26 07:50:18] Professor verified: 2026-0004-ISCP
+[2026-01-26 07:50:18] Transaction started
+[2026-01-26 07:50:18] SP prepared
+[2026-01-26 07:50:18] Processing Row 0: Student=2026-0001-CM, Grade=1, Subject=2, Prof=2026-0004-ISCP
+[2026-01-26 07:50:18] Executing SP with: [2026-0001-CM, 2026-0004-ISCP, 2, 1]
+[2026-01-26 07:50:18] SUCCESS Row 0: Grade saved
+[2026-01-26 07:50:18] Verification: Array
+(
+    [gradeID] => 3
+    [studentID] => 2026-0001-CM
+    [professorID] => 2026-0004-ISCP
+    [subjectID] => 2
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:50:18.293
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:50:18] Transaction committed. Saved count: 1
+[2026-01-26 07:50:18] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0004-ISCP"}
+[2026-01-26 07:50:18] === REQUEST COMPLETE ===
+
+[2026-01-26 07:50:19] === NEW SAVE REQUEST ===
+[2026-01-26 07:50:19] Raw Input: [{"id":"2026-0003-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 07:50:19] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0003-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 07:50:19] Session Data: Array
+(
+    [professorID] => 2026-0004-ISCP
+    [user_id] => 2026-0004-ISCP
+    [role] => Professor
+    [name] => Jose RIzal
+    [fullName] => Jose RIzal
+    [email] => 
+    [login_time] => 1769410207
+)
+
+[2026-01-26 07:50:19] Resolved Professor ID: 2026-0004-ISCP
+[2026-01-26 07:50:20] Professor verified: 2026-0004-ISCP
+[2026-01-26 07:50:20] Transaction started
+[2026-01-26 07:50:20] SP prepared
+[2026-01-26 07:50:20] Processing Row 0: Student=2026-0003-CM, Grade=1, Subject=2, Prof=2026-0004-ISCP
+[2026-01-26 07:50:20] Executing SP with: [2026-0003-CM, 2026-0004-ISCP, 2, 1]
+[2026-01-26 07:50:20] SUCCESS Row 0: Grade saved
+[2026-01-26 07:50:20] Verification: Array
+(
+    [gradeID] => 4
+    [studentID] => 2026-0003-CM
+    [professorID] => 2026-0004-ISCP
+    [subjectID] => 2
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:50:20.040
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:50:20] Transaction committed. Saved count: 1
+[2026-01-26 07:50:20] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0004-ISCP"}
+[2026-01-26 07:50:20] === REQUEST COMPLETE ===
+
+[2026-01-26 07:50:21] === NEW SAVE REQUEST ===
+[2026-01-26 07:50:21] Raw Input: [{"id":"2026-0004-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 07:50:21] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0004-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 07:50:21] Session Data: Array
+(
+    [professorID] => 2026-0004-ISCP
+    [user_id] => 2026-0004-ISCP
+    [role] => Professor
+    [name] => Jose RIzal
+    [fullName] => Jose RIzal
+    [email] => 
+    [login_time] => 1769410207
+)
+
+[2026-01-26 07:50:21] Resolved Professor ID: 2026-0004-ISCP
+[2026-01-26 07:50:21] Professor verified: 2026-0004-ISCP
+[2026-01-26 07:50:21] Transaction started
+[2026-01-26 07:50:21] SP prepared
+[2026-01-26 07:50:21] Processing Row 0: Student=2026-0004-CM, Grade=1, Subject=2, Prof=2026-0004-ISCP
+[2026-01-26 07:50:21] Executing SP with: [2026-0004-CM, 2026-0004-ISCP, 2, 1]
+[2026-01-26 07:50:21] SUCCESS Row 0: Grade saved
+[2026-01-26 07:50:21] Verification: Array
+(
+    [gradeID] => 5
+    [studentID] => 2026-0004-CM
+    [professorID] => 2026-0004-ISCP
+    [subjectID] => 2
+    [finalGrade] => 1
+    [dateUpdated] => 2026-01-26 14:50:21.810
+    [remarks] => 
+    [ayID] => 
+)
+
+[2026-01-26 07:50:21] Transaction committed. Saved count: 1
+[2026-01-26 07:50:21] Response: {"status":"success","message":"Successfully saved 1 grade(s).","saved_count":1,"professorID":"2026-0004-ISCP"}
+[2026-01-26 07:50:21] === REQUEST COMPLETE ===
+
+[2026-01-26 07:54:17] === NEW SAVE REQUEST ===
+[2026-01-26 07:54:17] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 07:54:17] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 07:54:17] Session Data: ProfessorID=2026-0004-ISCP, ayID=1
+[2026-01-26 07:54:17] Transaction started
+[2026-01-26 07:54:17] Executing SP with: [2026-0005-CM, 2026-0004-ISCP, 2, 1, 1, PASSED]
+[2026-01-26 07:54:17] ERROR Row 0: SQLSTATE[42000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Procedure or function sp_SaveStudentGrades has too many arguments specified.
+[2026-01-26 07:54:17] Transaction committed. Saved count: 0
+[2026-01-26 07:54:17] === REQUEST COMPLETE ===
+
+[2026-01-26 07:55:13] === NEW SAVE REQUEST ===
+[2026-01-26 07:55:13] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 07:55:13] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 07:55:13] Session Data: ProfessorID=2026-0004-ISCP, ayID=1
+[2026-01-26 07:55:13] Transaction started
+[2026-01-26 07:55:13] Executing SP with: [2026-0005-CM, 2026-0004-ISCP, 2, 1, 1, PASSED]
+[2026-01-26 07:55:13] SUCCESS Row 0: Saved
+[2026-01-26 07:55:13] Transaction committed. Saved count: 1
+[2026-01-26 07:55:13] === REQUEST COMPLETE ===
+
+[2026-01-26 07:56:57] === NEW SAVE REQUEST ===
+[2026-01-26 07:56:57] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":1}]
+[2026-01-26 07:56:57] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 1
+        )
+
+)
+
+[2026-01-26 07:56:57] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 07:56:57] Transaction started
+[2026-01-26 07:56:57] Executing SP with: [2026-0005-CM, 2026-0001-ISCP, 1, 1, 1, PASSED]
+[2026-01-26 07:56:57] SUCCESS Row 0: Saved
+[2026-01-26 07:56:57] Transaction committed. Saved count: 1
+[2026-01-26 07:56:57] === REQUEST COMPLETE ===
+
+[2026-01-26 07:56:58] === NEW SAVE REQUEST ===
+[2026-01-26 07:56:58] Raw Input: [{"id":"2026-0002-CM","gradeValue":"1","subjectID":1}]
+[2026-01-26 07:56:58] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0002-CM
+            [gradeValue] => 1
+            [subjectID] => 1
+        )
+
+)
+
+[2026-01-26 07:56:58] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 07:56:58] Transaction started
+[2026-01-26 07:56:58] Executing SP with: [2026-0002-CM, 2026-0001-ISCP, 1, 1, 1, PASSED]
+[2026-01-26 07:56:58] SUCCESS Row 0: Saved
+[2026-01-26 07:56:58] Transaction committed. Saved count: 1
+[2026-01-26 07:56:58] === REQUEST COMPLETE ===
+
+[2026-01-26 07:56:59] === NEW SAVE REQUEST ===
+[2026-01-26 07:56:59] Raw Input: [{"id":"2026-0001-CM","gradeValue":"1","subjectID":1}]
+[2026-01-26 07:56:59] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0001-CM
+            [gradeValue] => 1
+            [subjectID] => 1
+        )
+
+)
+
+[2026-01-26 07:56:59] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 07:56:59] Transaction started
+[2026-01-26 07:56:59] Executing SP with: [2026-0001-CM, 2026-0001-ISCP, 1, 1, 1, PASSED]
+[2026-01-26 07:56:59] SUCCESS Row 0: Saved
+[2026-01-26 07:56:59] Transaction committed. Saved count: 1
+[2026-01-26 07:56:59] === REQUEST COMPLETE ===
+
+[2026-01-26 07:56:59] === NEW SAVE REQUEST ===
+[2026-01-26 07:56:59] Raw Input: [{"id":"2026-0003-CM","gradeValue":"1","subjectID":1}]
+[2026-01-26 07:56:59] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0003-CM
+            [gradeValue] => 1
+            [subjectID] => 1
+        )
+
+)
+
+[2026-01-26 07:56:59] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 07:56:59] Transaction started
+[2026-01-26 07:56:59] Executing SP with: [2026-0003-CM, 2026-0001-ISCP, 1, 1, 1, PASSED]
+[2026-01-26 07:56:59] SUCCESS Row 0: Saved
+[2026-01-26 07:56:59] Transaction committed. Saved count: 1
+[2026-01-26 07:56:59] === REQUEST COMPLETE ===
+
+[2026-01-26 07:57:00] === NEW SAVE REQUEST ===
+[2026-01-26 07:57:00] Raw Input: [{"id":"2026-0004-CM","gradeValue":"1","subjectID":1}]
+[2026-01-26 07:57:00] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0004-CM
+            [gradeValue] => 1
+            [subjectID] => 1
+        )
+
+)
+
+[2026-01-26 07:57:00] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 07:57:00] Transaction started
+[2026-01-26 07:57:00] Executing SP with: [2026-0004-CM, 2026-0001-ISCP, 1, 1, 1, PASSED]
+[2026-01-26 07:57:00] SUCCESS Row 0: Saved
+[2026-01-26 07:57:00] Transaction committed. Saved count: 1
+[2026-01-26 07:57:00] === REQUEST COMPLETE ===
+
+[2026-01-26 08:12:05] === NEW SAVE REQUEST ===
+[2026-01-26 08:12:05] Raw Input: [{"id":"2026-0005-CM","gradeValue":"1","subjectID":2}]
+[2026-01-26 08:12:05] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0005-CM
+            [gradeValue] => 1
+            [subjectID] => 2
+        )
+
+)
+
+[2026-01-26 08:12:05] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 08:12:05] Transaction started
+[2026-01-26 08:12:05] Executing SP with: [2026-0005-CM, 2026-0001-ISCP, 2, 1, 1, PASSED]
+[2026-01-26 08:12:05] SUCCESS Row 0: Saved
+[2026-01-26 08:12:05] Transaction committed. Saved count: 1
+[2026-01-26 08:12:05] === REQUEST COMPLETE ===
+
+[2026-01-26 08:18:51] === NEW SAVE REQUEST ===
+[2026-01-26 08:18:51] Raw Input: [{"id":"2026-0001-CM","gradeValue":"1","subjectID":1}]
+[2026-01-26 08:18:51] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0001-CM
+            [gradeValue] => 1
+            [subjectID] => 1
+        )
+
+)
+
+[2026-01-26 08:18:51] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 08:18:51] Transaction started
+[2026-01-26 08:18:51] Executing SP with: [2026-0001-CM, 2026-0001-ISCP, 1, 1, 1, PASSED]
+[2026-01-26 08:18:51] SUCCESS Row 0: Saved
+[2026-01-26 08:18:51] Transaction committed. Saved count: 1
+[2026-01-26 08:18:51] === REQUEST COMPLETE ===
+
+[2026-01-26 11:59:26] === NEW SAVE REQUEST ===
+[2026-01-26 11:59:26] Raw Input: [{"id":"2026-0002-CM","gradeValue":"1","subjectID":1}]
+[2026-01-26 11:59:26] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0002-CM
+            [gradeValue] => 1
+            [subjectID] => 1
+        )
+
+)
+
+[2026-01-26 11:59:26] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 11:59:26] Transaction started
+[2026-01-26 11:59:26] Executing SP with: [2026-0002-CM, 2026-0001-ISCP, 1, 1, 1, PASSED]
+[2026-01-26 11:59:26] SUCCESS Row 0: Saved
+[2026-01-26 11:59:26] Transaction committed. Saved count: 1
+[2026-01-26 11:59:26] === REQUEST COMPLETE ===
+
+[2026-01-26 12:16:29] === NEW SAVE REQUEST ===
+[2026-01-26 12:16:29] Raw Input: [{"id":"2026-0003-CM","gradeValue":"INC","subjectID":1}]
+[2026-01-26 12:16:29] Decoded Data: Array
+(
+    [0] => Array
+        (
+            [id] => 2026-0003-CM
+            [gradeValue] => INC
+            [subjectID] => 1
+        )
+
+)
+
+[2026-01-26 12:16:29] Session Data: ProfessorID=2026-0001-ISCP, ayID=1
+[2026-01-26 12:16:29] Transaction started
+[2026-01-26 12:16:29] Executing SP with: [2026-0003-CM, 2026-0001-ISCP, 1, INC, 1, INCOMPLETE]
+[2026-01-26 12:16:29] SUCCESS Row 0: Saved
+[2026-01-26 12:16:29] Transaction committed. Saved count: 1
+[2026-01-26 12:16:29] === REQUEST COMPLETE ===
+

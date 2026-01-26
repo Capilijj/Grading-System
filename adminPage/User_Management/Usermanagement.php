@@ -59,12 +59,13 @@ function validateUserInput($data, &$errors) {
         $errors[] = "Password is required";
     }
     
-    if (empty($data['dob'])) {
-        $errors[] = "Birth date is required";
-    }
-    
     // Role-specific validation
     if ($role === 'Student') {
+        // Students need DOB
+        if (empty($data['dob'])) {
+            $errors[] = "Birth date is required";
+        }
+        
         if (empty($data['course_id']) || $data['course_id'] == 0) {
             $errors[] = "Course selection is required for students";
         }
@@ -77,10 +78,18 @@ function validateUserInput($data, &$errors) {
     }
     
     if ($role === 'Professor') {
+        // Professors need DOB
+        if (empty($data['dob'])) {
+            $errors[] = "Birth date is required";
+        }
+        
         if (empty($data['department'])) {
             $errors[] = "Department is required for professors";
         }
     }
+    
+    // Staff doesn't need DOB, sex, phone, address
+    // Only needs: username, first name, last name, email, password
     
     return empty($errors);
 }
@@ -88,10 +97,17 @@ function validateUserInput($data, &$errors) {
 // --- 3. CHECK FOR DUPLICATE ID ---
 function checkDuplicateID($conn, $role, $idNumber) {
     try {
-        $table = ($role === 'Student') ? 'Student' : (($role === 'Professor') ? 'Professor' : 'Staff');
-        $column = ($role === 'Student') ? 'studentID' : (($role === 'Professor') ? 'professorID' : 'staffID');
+        if ($role === 'Student') {
+            $stmt = $conn->prepare("SELECT COUNT(*) FROM dbo.Student WHERE studentID = ?");
+        } elseif ($role === 'Professor') {
+            $stmt = $conn->prepare("SELECT COUNT(*) FROM dbo.Professor WHERE professorID = ?");
+        } elseif ($role === 'Staff') {
+            // Staff uses dbo.Admin table
+            $stmt = $conn->prepare("SELECT COUNT(*) FROM dbo.Admin WHERE username = ?");
+        } else {
+            return false;
+        }
         
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM dbo.$table WHERE $column = ?");
         $stmt->execute([$idNumber]);
         return $stmt->fetchColumn() > 0;
     } catch (PDOException $e) {
@@ -210,32 +226,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['create_account'])) {
                 ]);
             }
             elseif ($formData['role'] === 'Staff') {
-                // Staff: Simple account creation
-                $stmt = $conn->prepare("EXEC dbo.sp_UniversalActivate 
-                    @Role=?, @AccountID=?, @Password=?, @TargetID=?, @SectionID=?, 
-                    @fName=?, @mName=?, @lName=?, @dob=?, @sex=?, @email=?, @phone=?, 
-                    @street=?, @city=?, @country=?, @zip=?, @dept=?, @yearLvl=?, @Status=?");
+                // Staff: Insert into dbo.Admin table using dedicated SP
+                $stmt = $conn->prepare("EXEC dbo.sp_CreateStaffAccount 
+                    @Username=?, @Password=?, @FirstName=?, @LastName=?, 
+                    @Email=?, @Role=?, @Status=?");
                 
                 $stmt->execute([
-                    $formData['role'], 
-                    $formData['id_number'], 
-                    $pwd, 
-                    0, 
-                    0,
-                    $formData['fName'], 
-                    $formData['mName'], 
-                    $formData['lName'], 
-                    $formData['dob'], 
-                    $formData['sex'], 
-                    $formData['email'], 
-                    $formData['phone'],
-                    $formData['street'], 
-                    $formData['city'], 
-                    $country, 
-                    $formData['zip'], 
-                    null, 
-                    0, 
-                    $formData['account_status']
+                    $formData['id_number'],     // Username
+                    $pwd,                       // Hashed password
+                    $formData['fName'],         // FirstName
+                    $formData['lName'],         // LastName
+                    $formData['email'],         // Email
+                    'Staff',                    // Role
+                    $formData['account_status'] // Status
                 ]);
             }
 

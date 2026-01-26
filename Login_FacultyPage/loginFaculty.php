@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-// Prevent caching
+// Prevent caching for security
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 
 require_once '../Database/database_Connection.php'; 
 
-$error = ""; // Placeholder para sa text validation
+$error = ""; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inputID = trim($_POST['faculty_id']); 
@@ -16,49 +16,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         /**
-         * LOGIC 1: ADMIN (PLAIN TEXT)
+         * CALL STORED PROCEDURE
+         * Tinitiyak na ang input ay NVARCHAR para iwas Conversion Error
          */
-        $adminStmt = $conn->prepare("SELECT adminID, fName, lName, role FROM Admin 
-                                   WHERE (CAST(username AS NVARCHAR(50)) = ? OR CAST(adminID AS NVARCHAR(50)) = ?) 
-                                   AND password = ? AND status = 'Active'");
-        $adminStmt->execute([$inputID, $inputID, $password]);
-        $adminUser = $adminStmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $conn->prepare("{CALL sp_AuthenticateFaculty(?)}");
+        $stmt->bindParam(1, $inputID, PDO::PARAM_STR); 
+        $stmt->execute();
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($adminUser) {
-            $_SESSION['adminID'] = $adminUser['adminID'];
-            $_SESSION['role'] = $adminUser['role'];
-            $_SESSION['name'] = $adminUser['fName'] . " " . $adminUser['lName'];
-            
-            $conn->prepare("UPDATE Admin SET lastLogin = GETDATE() WHERE adminID = ?")
-                 ->execute([$adminUser['adminID']]);
-            
-            header("Location: ../adminPage/User_management/Usermanagement.php");
-            exit();
+        if ($userData) {
+            // I-verify ang hashed password laban sa kinuha sa DB
+            if (password_verify($password, $userData['HashedPassword'])) {
+                
+                // Clear any old session data
+                session_regenerate_id(true);
+                
+                if ($userData['UserSource'] === 'AdminTable') {
+                    $_SESSION['adminID'] = $userData['UserID'];
+                    $_SESSION['user_id'] = $userData['UserID'];  // Fallback
+                    $_SESSION['role'] = $userData['role'];
+                    $_SESSION['name'] = $userData['fName'] . " " . $userData['lName'];
+                    $_SESSION['fullName'] = $userData['fName'] . " " . $userData['lName'];
+                    
+                    // Update Last Login gamit ang VARCHAR ID
+                    $update = $conn->prepare("UPDATE Admin SET lastLogin = GETDATE() WHERE CAST(adminID AS NVARCHAR(50)) = ?");
+                    $update->execute([$userData['UserID']]);
+                    
+                    header("Location: ../adminPage/User_management/Usermanagement.php");
+                } else {
+                    // CRITICAL FIX: Set ALL session variables for professors
+                    $_SESSION['professorID'] = $userData['UserID'];
+                    $_SESSION['user_id'] = $userData['UserID'];  // Fallback/alternative key
+                    $_SESSION['role'] = 'Professor';
+                    $_SESSION['name'] = $userData['fName'] . " " . $userData['lName'];
+                    $_SESSION['fullName'] = $userData['fName'] . " " . $userData['lName'];
+                    $_SESSION['email'] = $userData['email'] ?? '';
+                    $_SESSION['login_time'] = time();
+
+                    // Update Last Login gamit ang VARCHAR ID
+                    $update = $conn->prepare("UPDATE Professor SET lastLogin = GETDATE() WHERE CAST(professorID AS NVARCHAR(50)) = ?");
+                    $update->execute([$userData['UserID']]);
+
+                    header("Location: ../Professor_Dashboard/ProfessorDashboard.php");
+                }
+                exit();
+            }
         }
 
-        /**
-         * LOGIC 2: PROFESSOR (HASHED)
-         */
-        $profStmt = $conn->prepare("SELECT professorID, fName, lName, password, employmentStatus 
-                                   FROM Professor 
-                                   WHERE CAST(professorID AS NVARCHAR(50)) = ? 
-                                   AND employmentStatus LIKE 'Active%'"); 
-        $profStmt->execute([$inputID]);
-        $profUser = $profStmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($profUser && password_verify($password, $profUser['password'])) {
-            $_SESSION['professorID'] = $profUser['professorID'];
-            $_SESSION['role'] = 'Professor';
-            $_SESSION['name'] = $profUser['fName'] . " " . $profUser['lName'];
-
-            $conn->prepare("UPDATE Professor SET lastLogin = GETDATE() WHERE professorID = ?")
-                 ->execute([$profUser['professorID']]);
-
-            header("Location: ../Professor_Dashboard/ProfessorDashboard.php");
-            exit();
-        }
-
-        // TEXT VALIDATION ERROR
         $error = "Invalid credentials or inactive account.";
 
     } catch (PDOException $e) {
@@ -66,10 +70,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Redirect kung naka-login na
+// Auto-redirect kung may session na
 if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] === 'Professor') header("Location: ../Professor_Dashboard/ProfessorDashboard.php");
-    else header("Location: ../adminPage/User_management/Usermanagement.php");
+    if ($_SESSION['role'] === 'Professor') {
+        header("Location: ../Professor_Dashboard/ProfessorDashboard.php");
+    } else {
+        header("Location: ../adminPage/User_management/Usermanagement.php");
+    }
     exit();
 }
 ?>
@@ -94,7 +101,7 @@ if (isset($_SESSION['role'])) {
                     <img src="../../image/logo.png" alt="ISCP Logo">
                 </div>
                 <h2 class="title-text">ISCP Portal</h2>
-                <p class="instruction-text">Sign in using Faculty ID or Admin Username</p>
+                <p class="instruction-text">Sign in using Faculty ID, Staff, or Admin Username</p>
 
                 <?php if(!empty($error)): ?>
                     <div class="error-text-msg">

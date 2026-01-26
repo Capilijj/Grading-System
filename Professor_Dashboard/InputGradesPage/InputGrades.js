@@ -2,8 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const tableBody = document.getElementById('gradeTableBody');
     const searchInput = document.getElementById('gradeSearch');
 
+    console.log('InputGrades.js loaded'); // DEBUG
+
     // 1. FUNCTION: GET REMARKS LOGIC
-    // Ginagamit ito para sa "Live" update ng UI
     function updateRowRemarks(inputElement) {
         const row = inputElement.closest('tr');
         const remarksCell = row.querySelector('.remarks-col');
@@ -12,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const val = inputElement.value.toUpperCase().trim();
         const numVal = parseFloat(val);
 
-        // Reset classes/styles
         remarksCell.className = "text-center remarks-col"; 
         remarksCell.style.fontWeight = "bold";
 
@@ -20,17 +20,17 @@ document.addEventListener('DOMContentLoaded', function() {
             remarksCell.innerText = "";
         } else if (val === "INC") {
             remarksCell.innerText = "INCOMPLETE";
-            remarksCell.style.color = "#e67e22"; // Orange
+            remarksCell.style.color = "#e67e22";
         } else if (val === "W") {
             remarksCell.innerText = "WITHDRAWN";
-            remarksCell.style.color = "#7f8c8d"; // Gray
+            remarksCell.style.color = "#7f8c8d";
         } else if (!isNaN(numVal)) {
             if (numVal >= 1.0 && numVal <= 3.0) {
                 remarksCell.innerText = "PASSED";
-                remarksCell.style.color = "#27ae60"; // Green
+                remarksCell.style.color = "#27ae60";
             } else if (numVal > 3.0 && numVal <= 5.0) {
                 remarksCell.innerText = "FAILED";
-                remarksCell.style.color = "#e74c3c"; // Red
+                remarksCell.style.color = "#e74c3c";
             } else {
                 remarksCell.innerText = "INVALID";
                 remarksCell.style.color = "#ff0000";
@@ -41,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 2. EVENT LISTENER: LIVE UPDATE HABANG NAGTATYPE
+    // 2. LIVE UPDATE
     tableBody.addEventListener('input', function(e) {
         if (e.target.classList.contains('grade-input')) {
             updateRowRemarks(e.target);
         }
     });
 
-    // 3. SEARCH FUNCTIONALITY
+    // 3. SEARCH
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             const filter = searchInput.value.toLowerCase();
@@ -61,18 +61,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 4. SAVE LOGIC (AJAX)
+    // 4. SAVE LOGIC WITH DEBUG
     tableBody.addEventListener('click', function(e) {
         if (e.target && e.target.classList.contains('btn-row-save')) {
             const btn = e.target;
             const row = btn.closest('tr');
             const input = row.querySelector('.grade-input');
             
+            const studentID = row.getAttribute('data-student-id');
+            const subjectID = row.getAttribute('data-subject-id');
             const finalGradeValue = input.value.toUpperCase().trim();
             const numVal = parseFloat(finalGradeValue);
             const validSymbols = ['INC', 'W'];
 
-            // ENGLISH VALIDATION
+            console.log('Save clicked:', { studentID, subjectID, finalGradeValue }); // DEBUG
+
+            // VALIDATION
             if (!validSymbols.includes(finalGradeValue)) {
                 if (isNaN(numVal) || numVal < 1.0 || numVal > 5.0) {
                     alert("Invalid Grade! Please enter a value between 1.0 and 5.0, or use INC/W.");
@@ -81,12 +85,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
+            // Check if subjectID exists
+            if (!subjectID || subjectID === 'null' || subjectID === '') {
+                alert("Error: Subject ID is missing. Please refresh the page.");
+                console.error('Missing subjectID in row:', row);
+                return;
+            }
+
             // DATA PREPARATION
             const gradeData = [{
-                id: row.getAttribute('data-student-id'),
+                id: studentID,
                 gradeValue: finalGradeValue,
-                subjectID: row.getAttribute('data-subject-id') || 1
+                subjectID: parseInt(subjectID)
             }];
+
+            console.log('Sending data:', gradeData); // DEBUG
 
             btn.disabled = true;
             btn.innerText = "Saving...";
@@ -96,13 +109,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(gradeData)
             })
-            .then(res => res.json())
+            .then(res => {
+                console.log('Response status:', res.status); // DEBUG
+                return res.json();
+            })
             .then(data => {
+                console.log('Server Response:', data); // DEBUG
+                
                 if(data.status === 'success') {
                     btn.style.background = "#2ecc71";
                     btn.innerText = "Saved!";
                     
-                    // Permanent color update for input after save
+                    // Permanent color update
                     if (numVal > 3.0 || finalGradeValue === '5.0') {
                         input.style.color = "#e74c3c"; 
                     } else if (numVal <= 3.0) {
@@ -115,14 +133,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         btn.disabled = false;
                     }, 1500);
                 } else {
-                    alert("Error: " + data.message);
+                    console.error('Save failed:', data);
+                    alert("Error: " + (data.message || 'Unknown error') + "\n\nCheck browser console (F12) for details");
                     btn.disabled = false;
                     btn.innerText = "Save";
                 }
             })
             .catch(err => {
                 console.error("Fetch Error:", err);
-                alert("Network Error: Could not connect to the server.");
+                alert("Network Error: " + err.message + "\n\nCheck browser console (F12) for details");
                 btn.disabled = false;
                 btn.innerText = "Save";
             });
